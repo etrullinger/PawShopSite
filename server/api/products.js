@@ -29,6 +29,7 @@ router.get("/:category", async (req, res, next) => {
                 category: req.params.category,
             }
         });
+        res.send(products)
     } catch(error){
         next(error)
     }
