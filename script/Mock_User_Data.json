@@ -1,6 +1,6 @@
 [{"id":1,"first_name":"Timofei","last_name":"Arbuckle","email":"tarbuckle0@ehow.com","password":"MQKvRU98S","admin":true},
-{"id":2,"first_name":"Perl","last_name":"Laxe","email":"plaxe1@adobe.com","password":"HyACryJFX","admin":true},
-{"id":3,"first_name":"Jimmie","last_name":"D'Aeth","email":"jdaeth2@mozilla.com","password":"KoSrbDB9","admin":true},
+{"id":2,"first_name":"Perl","last_name":"Laxe","email":"plaxe1@adobe.com","password":"HyACryJFX","admin":false},
+{"id":3,"first_name":"Jimmie","last_name":"D'Aeth","email":"jdaeth2@mozilla.com","password":"KoSrbDB9","admin":false},
 {"id":4,"first_name":"Monroe","last_name":"Oxbe","email":"moxbe3@amazon.com","password":"7L8JOV7ukjD4","admin":true},
 {"id":5,"first_name":"Silva","last_name":"Smorthit","email":"ssmorthit4@meetup.com","password":"WFxhuvk1oC","admin":false},
 {"id":6,"first_name":"Alf","last_name":"Jagson","email":"ajagson5@pen.io","password":"tNUU7372P","admin":false},
