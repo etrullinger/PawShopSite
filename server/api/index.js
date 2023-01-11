@@ -5,8 +5,7 @@ module.exports = router
 router.use('/users', require('./users'));
 router.use('/products', require('./products'));
 =======
-router.use('/users', require('./users'))
-router.use('/admin', require('/admin'))
+router.use('/admin', require('./admin'))
 >>>>>>> main
 
 router.use((req, res, next) => {
