@@ -6,7 +6,6 @@ import Account from './Account';
 import Products from './Products';
 import Orders from './Orders';
 import { me } from '../features/authSlice';
-import Products from './Products';
 import { fetchProductsAsync, selectProducts } from '../features/productsSlice';
 
 /**

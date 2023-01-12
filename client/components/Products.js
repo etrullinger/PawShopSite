@@ -6,20 +6,11 @@ import Avatar from '@mui/material/Avatar';
 import { selectProducts } from '../features/productsSlice'
 
 
+
 // Write a component to display a list of all products (at least their name, category, price, short description, and a add to cart button)
 const Products = () => {
     
     const Products = useSelector(selectProducts)
-
-    // const dispatch = useDispatch()
-
-    // const handleAddToCart = async (productId) => {
-    //     try{
-    //         await dispatch(addProductToCartAsync(productId))
-    //     } catch(error){
-    //         throw(error)
-    //     }
-    // };
 
     return (
     <div>
@@ -36,9 +27,6 @@ const Products = () => {
                 <p>${product.price}</p>
                 <p>{product.description}</p>
 
-                <Button onClick={()=> handleAddToCart(product.id)} variant="outlined" color="primary">
-                    Add to Cart 🛒
-                </Button>
             </div>
         ))
         : null
