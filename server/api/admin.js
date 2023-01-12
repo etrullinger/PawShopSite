@@ -1,8 +1,8 @@
 const router = require("express").Router();
-const { Product, User } = require('../db/models');
+const { Product, User } = require('../db');
 
 // GET /api/admin/products
-router.get('/admin/products', async (req, res, next) => {
+router.get('/products', async (req, res, next) => {
   try{
     res.send(await Product.findAll());
   } catch (error) {
@@ -12,7 +12,7 @@ router.get('/admin/products', async (req, res, next) => {
 
 // view all users
 // GET /api/admin/users
-router.get('/admin/users', async(req, res, next) => {
+router.get('/users', async(req, res, next) => {
   try{
     res.send(await User.findAll());
   } catch (error){
@@ -22,7 +22,7 @@ router.get('/admin/users', async(req, res, next) => {
 
 // add a new product
 // POST /api/admin/products
-router.post('/admin/products', async (req, res, next) => {
+router.post('/products', async (req, res, next) => {
   try {
     res.send(await Product.create(req.body));
   } catch (error) {
@@ -32,7 +32,7 @@ router.post('/admin/products', async (req, res, next) => {
 
 // delete an existing product
 // DELETE /api/admin/products/:productId
-router.delete('/admin/products/:productId', async (req, res, next) => {
+router.delete('/products/:productId', async (req, res, next) => {
   try{
     const product = await Product.findByPk(req.params.productId);
     await product.destroy();
@@ -44,7 +44,7 @@ router.delete('/admin/products/:productId', async (req, res, next) => {
 
 // edit an existing product
 // PUT /api/admin/products/:productId
-router.put("/admin/products/:productId", async(req, res, next) => {
+router.put("/products/:productId", async(req, res, next) => {
   try{
     const product = await Product.findByPk(req.params.productId);
     res.send(await product.update(req.body));
