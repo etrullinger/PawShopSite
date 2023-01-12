@@ -1,18 +1,30 @@
-body {
-  font-family: sans-serif;
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color:gainsboro;
 }
 
-a {
+#header {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+nav {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-link {
+  padding: 0 2em;
   text-decoration: none;
+  color:darkslategrey;
 }
 
 label {
   display: block;
-}
-
-nav a {
-  display: inline-block;
-  margin: 1em;
 }
 
 form div {

@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import AuthForm from './AuthForm';
-import Home from './Home';
+import Account from './Account';
+import Products from './Products';
+import Orders from './Orders';
 import { me } from '../features/authSlice';
 import SingleProduct from './SingleProduct';
-import { fetchSingleProductAsync, selectSingleProduct } from '../features/singleProductSlice';
+import { fetchProductsAsync, selectProducts } from '../features/productsSlice';
 
 /**
  * COMPONENT
@@ -15,26 +17,25 @@ const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const dispatch = useDispatch();
 
-  const singleProduct = useSelector(selectSingleProduct);
-
   useEffect(() => {
     dispatch(me());
-    // dispatch(fetchSingleProductAsync())
-  }, [dispatch, singleProduct]);
+    dispatch(fetchProductsAsync())
+  }, [dispatch]);
 
   return (
     <div>
       {isLoggedIn ? (
         <Routes>
-          <Route path="/*" element={<Home />} />
-          <Route to="/home" element={<Home />} />
+          <Route path="/*" element={<Products />} />
+          <Route to="/account" element={<Account />} />
+          <Route to="/account/orders" element={<Orders />} />
         </Routes>
       ) : (
         <Routes>
 
           <Route
             path="/*"
-            element={<AuthForm name="login" displayName="Login" />}
+            element={<Products />}
           />
           <Route
             path="/login"
@@ -46,11 +47,9 @@ const AppRoutes = () => {
           />
 
           <Route
-            path="/products/:productId"
-            element={<SingleProduct name="singleProduct" />}
+            path='/products'
+            element={ <Products />}
           />
-
-
         </Routes>
       )}
     </div>
