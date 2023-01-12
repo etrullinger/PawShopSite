@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import AuthForm from './AuthForm';
-import Home from './Home';
+import Account from './Account';
+import Products from './Products';
+import Orders from './Orders';
 import { me } from '../features/authSlice';
 import Products from './Products';
 import { fetchProductsAsync, selectProducts } from '../features/productsSlice';
@@ -26,14 +28,15 @@ const AppRoutes = () => {
     <div>
       {isLoggedIn ? (
         <Routes>
-          <Route path="/*" element={<Home />} />
-          <Route to="/home" element={<Home />} />
+          <Route path="/*" element={<Products />} />
+          <Route to="/account" element={<Account />} />
+          <Route to="/account/orders" element={<Orders />} />
         </Routes>
       ) : (
         <Routes>
           <Route
             path="/*"
-            element={<AuthForm name="login" displayName="Login" />}
+            element={<Products />}
           />
           <Route
             path="/login"
