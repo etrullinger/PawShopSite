@@ -5,7 +5,6 @@ import AuthForm from './AuthForm';
 import Account from './Account';
 import Products from './Products';
 import Orders from './Orders';
-import AuthFormSignup from './AuthFormSignup';
 import { me } from '../features/authSlice';
 
 /**
@@ -40,7 +39,7 @@ const AppRoutes = () => {
           />
           <Route
             path="/signup"
-            element={<AuthFormSignup name="signup" displayName="Sign Up" />}
+            element={<AuthForm name="signup" displayName="Sign Up" />}
           />
         </Routes>
       )}
