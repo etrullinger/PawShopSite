@@ -8,7 +8,7 @@ import { authenticate } from '../store/store';
   Props for Sign up: name="signup", displayName="Sign Up"
 **/
 
-const AuthForm = ({ name, displayName }) => {
+const AuthFormSignup = ({ name, displayName }) => {
   const { error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
@@ -23,6 +23,18 @@ const AuthForm = ({ name, displayName }) => {
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
+      <div>
+          <label htmlFor="firstName">
+            <small>First Name</small>
+          </label>
+          <input name="firstName" type="text" />
+        </div>
+        <div>
+          <label htmlFor="lastName">
+            <small>Last Name</small>
+          </label>
+          <input name="lastName" type="text" />
+        </div>
         <div>
           <label htmlFor="email">
             <small>Email</small>
@@ -43,4 +55,4 @@ const AuthForm = ({ name, displayName }) => {
   );
 };
 
-export default AuthForm;
+export default AuthFormSignup;

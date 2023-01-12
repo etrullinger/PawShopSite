@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import AuthForm from './AuthForm';
+import AuthFormSignup from './AuthFormSignup';
 import Home from './Home';
 import { me } from '../features/authSlice';
 
@@ -36,7 +37,7 @@ const AppRoutes = () => {
           />
           <Route
             path="/signup"
-            element={<AuthForm name="signup" displayName="Sign Up" />}
+            element={<AuthFormSignup name="signup" displayName="Sign Up" />}
           />
         </Routes>
       )}
