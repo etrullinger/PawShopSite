@@ -6,11 +6,10 @@ export const fetchUsersAsync = createAsyncThunk('users', async () => {
   try{
     if(token){
     const { data } = await axios.get('/api/admin/users', { headers: { authorization: token }});
- 
     return data;
-    }
+    } 
   } catch (error){
-    console.log(error);
+    throw new Error('Access Restricted');
   }
 });
 

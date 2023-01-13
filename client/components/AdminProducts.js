@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectProducts } from "../features/productsSlice";
+import { Link } from 'react-router-dom'
 
 const AdminProducts = () => {
   const products = useSelector(selectProducts);
@@ -18,7 +19,9 @@ const AdminProducts = () => {
                       ProductID: {product.id}, Name: {product.name}, Price: $
                       {product.price}
                     </span>
-                      <button>Edit</button>
+                      <Link to={`/admin/products/${product.id}`}>
+                      <button type="button" className="linked-button">Edit</button>
+                      </Link>
                       <button>Delete</button>
                   </div>
                 </li>
