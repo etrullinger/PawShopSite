@@ -37,17 +37,17 @@ const Products = () => {
 
         {filteredData.map((product) =>(
             <div key={product.id} className="product" >
+                <div>
+                    <h3>{product.name}</h3>
+                    <p>Category: {product.category}</p>
 
-                <h3>{product.name}</h3>
-                <p>Category: {product.category}</p>
-
-                <Link to={`/products/${product.id}`}>
-                    <img src={product.imageUrl}/>
-                </Link>
-
-                <p>${product.price}</p>
-                <p>{product.description}</p>
-                <button>Add to Cart</button>
+                    <Link to={`/products/${product.id}`}>
+                        <img src={product.imageUrl}/>
+                    </Link>
+                    <p>${product.price}</p>
+                    <p>{product.description}</p>
+                    <button>Add to Cart</button> 
+                </div>
             </div>
         ))
         

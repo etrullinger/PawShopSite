@@ -21,7 +21,7 @@ const SingleProduct = () => {
       <button><Link to={`/products`}>
         Back to Products</Link></button>
       <h3>{product.name}</h3>
-      <p>{product.category}</p>
+      <p>Category: {product.category}</p>
       <img alt={product.name} src={product.imageUrl}/>
       <p>{product.description}</p>
       <p>${product.price}</p>
