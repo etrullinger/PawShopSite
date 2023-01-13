@@ -12,6 +12,14 @@ export const fetchProductsAsync = createAsyncThunk("products", async ()=> {
     }
 });
 
+export const deleteProductAsync = createAsyncThunk("products/delete", async (id) => {
+    try{
+        await axios.delete(`/api/products/${id}`);
+        return id;
+    } catch (error) {
+        console.log(error)
+    }
+});
 
 
 // * Here we invoke the createSlice function, and pass it an object with all of our state details
@@ -26,7 +34,10 @@ export const productsSlice = createSlice({
     // * When our thunk is fulfilled, we can return the value as our new state  
         builder.addCase(fetchProductsAsync.fulfilled, (state, action) => {
             return action.payload;
-        })
+        });
+        builder.addCase(deleteProductAsync.fulfilled, (state, action) => {
+            return state.filter((product) => product.id !== action.payload)
+        });
     }
 })
 

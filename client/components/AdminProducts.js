@@ -1,10 +1,15 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectProducts } from "../features/productsSlice";
+import { deleteProductAsync, selectProducts } from "../features/productsSlice";
 import { Link } from 'react-router-dom'
 
 const AdminProducts = () => {
   const products = useSelector(selectProducts);
+  const dispatch = useDispatch();
+  
+  const handleDelete = (productId) => {
+    dispatch(deleteProductAsync(productId));
+  };
 
   return (
     <div>
@@ -22,7 +27,11 @@ const AdminProducts = () => {
                       <Link to={`/admin/products/${product.id}`}>
                       <button type="button" className="linked-button">Edit</button>
                       </Link>
-                      <button>Delete</button>
+                      <button
+                      id="delete-button"
+                      onClick={() => handleDelete(product.id)}
+                      >Delete
+                      </button>
                   </div>
                 </li>
               </div>

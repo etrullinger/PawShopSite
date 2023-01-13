@@ -34,6 +34,7 @@ const EditProduct = () => {
         <label htmlFor="name">Product Name:</label>
         <input
           name="name"
+          defaultValue={product.name}
           placeholder={product.name}
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -42,6 +43,7 @@ const EditProduct = () => {
         <label htmlFor="price">Price:</label>
         <input
           name="price"
+          defaultValue={product.price}
           placeholder={product.price}
           value={price}
           onChange={(e) => setPrice(e.target.value)}
@@ -50,6 +52,7 @@ const EditProduct = () => {
         <label htmlFor="description">Description:</label>
         <textarea
           name="description"
+          defaultValue={product.description}
           placeholder={product.description}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
