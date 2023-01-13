@@ -1,8 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import Button from '@mui/material/Button'
-import Avatar from '@mui/material/Avatar';
 import { selectProducts } from '../features/productsSlice'
 
 
@@ -21,12 +19,12 @@ const Products = () => {
                 <p>Category: {product.category}</p>
 
                 <Link to={`/products/${product.id}`}>
-                    <Avatar alt={product.name}  src={product.imageUrl} sx={{ width: 150, height: 150 }}/>
+                    <img src={product.imageUrl}/>
                 </Link>
 
                 <p>${product.price}</p>
                 <p>{product.description}</p>
-
+                <button>Add to Cart</button>
             </div>
         ))
         : null
