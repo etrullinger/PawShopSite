@@ -1,5 +1,6 @@
 const router = require("express").Router();
-const { Product, User } = require('../db');
+const Product = require('../db/models/Product');
+const User = require('../db/models/User');
 
 // GET /api/admin/products
 router.get('/products', async (req, res, next) => {
@@ -12,26 +13,28 @@ router.get('/products', async (req, res, next) => {
 
 // view all users
 // GET /api/admin/users
-router.get('/users', async(req, res, next) => {
-  try{
-    res.send(await User.findAll());
-  } catch (error){
-    next(error)
+router.get('/users', async (req, res, next) => {
+  try {
+    const users = await User.findAll({
+      // explicitly select only the id and username fields - even though
+      // users' passwords are encrypted, it won't help if we just
+      // send everything to anyone who asks!
+      attributes: ['id', 'email', 'admin', 'firstName', 'lastName']
+    })
+    res.send(users)
+  } catch (err) {
+    next(err)
   }
-});
-// router.get('/', async (req, res, next) => {
-//   try {
-//     const loggedInUser = await User.findByToken(req.headers.authorization);
-//     if(loggedInUser.admin){
-//       const users = await User.findAll({
-//         attributes: ['id', 'email', 'firstName', 'lastName']
-//       });
-//       res.send(users);
-//     }
-//   } catch(error) {
+})
+
+// router.get('/users', async(req, res, next) => {
+//   try{
+//     const users = await User.findAll();
+//     res.send(users)
+//   } catch (error){
 //     next(error)
 //   }
-// })
+// });
 
 // add a new product
 // POST /api/admin/products

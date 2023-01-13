@@ -9,6 +9,7 @@ import { me } from "../features/authSlice";
 import SingleProduct from "./SingleProduct";
 import { fetchProductsAsync, selectProducts } from "../features/productsSlice";
 import Users from "./Users";
+import AdminProducts from "./AdminProducts";
 
 /**
  * COMPONENT
@@ -31,6 +32,7 @@ const AppRoutes = () => {
           return (
             <Routes>
               <Route path="/*" element={<Products />} />
+              <Route path="/products/:productId" element={<SingleProduct />} />
               <Route to="/account" element={<Account />} />
               <Route to="/account/orders" element={<Orders />} />
             </Routes>
@@ -39,7 +41,8 @@ const AppRoutes = () => {
           return (
             <Routes>
               <Route path="/*" element={<Products />} />
-              <Route to="/admin/users" element={<Users />} />
+              <Route path="/admin/products" element={<AdminProducts />} />
+              <Route path="/admin/users" element={<Users />} />
               <Route to="/account/orders" element={<Orders />} />
             </Routes>
           );
