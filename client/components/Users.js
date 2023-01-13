@@ -20,8 +20,8 @@ const Users = () => {
               <div key={user.id} className="user">
                 <li>
                   <p>
-                    UserID:{user.id} - Name:
-                    {`${user.firstName} ${user.lastName}`} - Email:{user.email}
+                    UserID: {user.id}, Name:{" "}
+                    {`${user.firstName} ${user.lastName}`}, Email: {user.email}
                   </p>
                 </li>
               </div>
