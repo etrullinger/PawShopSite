@@ -35,7 +35,7 @@ const Navbar = () => {
               <div>
             {/* The navbar will show these links after you log in */}
             <Link to='/admin/products' className='nav-link'>Products</Link>
-            <Link to="/users" className='nav-link'>Users</Link>
+            <Link to="/admin/users" className='nav-link'>Users</Link>
             <button type="button" onClick={logoutAndRedirectHome}>
               Logout
             </button>

@@ -19,6 +19,19 @@ router.get('/users', async(req, res, next) => {
     next(error)
   }
 });
+// router.get('/', async (req, res, next) => {
+//   try {
+//     const loggedInUser = await User.findByToken(req.headers.authorization);
+//     if(loggedInUser.admin){
+//       const users = await User.findAll({
+//         attributes: ['id', 'email', 'firstName', 'lastName']
+//       });
+//       res.send(users);
+//     }
+//   } catch(error) {
+//     next(error)
+//   }
+// })
 
 // add a new product
 // POST /api/admin/products

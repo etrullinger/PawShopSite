@@ -22,7 +22,7 @@ const AuthForm = ({ name, displayName }) => {
       const lastName = evt.target.lastName.value;
       dispatch(authenticateSignup({ firstName, lastName, email, password, method: formName }));
     } else {
-      dispatch(authenticate({ email, password, admin, method: formName }));
+      dispatch(authenticate({ email, password, method: formName }));
     }
   };
 
