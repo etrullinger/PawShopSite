@@ -6,6 +6,7 @@ import Account from './Account';
 import Products from './Products';
 import Orders from './Orders';
 import { me } from '../features/authSlice';
+import SingleProduct from './SingleProduct';
 import { fetchProductsAsync, selectProducts } from '../features/productsSlice';
 
 /**
@@ -15,8 +16,6 @@ import { fetchProductsAsync, selectProducts } from '../features/productsSlice';
 const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const dispatch = useDispatch();
-
-  const products = useSelector(selectProducts)
 
   useEffect(() => {
     dispatch(me());
@@ -33,6 +32,7 @@ const AppRoutes = () => {
         </Routes>
       ) : (
         <Routes>
+
           <Route
             path="/*"
             element={<Products />}
@@ -45,10 +45,13 @@ const AppRoutes = () => {
             path="/signup"
             element={<AuthForm name="signup" displayName="Sign Up" />}
           />
-
           <Route
             path='/products'
             element={ <Products />}
+          />
+          <Route
+            path="/products/:productId"
+            element={ <SingleProduct /> }
           />
         </Routes>
       )}
