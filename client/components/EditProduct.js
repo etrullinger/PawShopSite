@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { editProductAsync } from "../features/singleProductSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, redirect, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { selectSingleProduct } from "../features/singleProductSlice";
 import { fetchSingleProductAsync } from "../features/singleProductSlice";
 

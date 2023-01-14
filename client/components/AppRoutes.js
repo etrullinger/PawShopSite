@@ -11,6 +11,7 @@ import { fetchProductsAsync, selectProducts } from "../features/productsSlice";
 import Users from "./Users";
 import AdminProducts from "./AdminProducts";
 import EditProduct from "./EditProduct";
+import AddProduct from "./AddProduct";
 
 /**
  * COMPONENT
@@ -45,6 +46,7 @@ const AppRoutes = () => {
               <Route path="/admin/products" element={<AdminProducts />} />
               <Route path="/admin/users" element={<Users />} />
               <Route path="/admin/products/:productId" element={<EditProduct />} />
+              <Route path="/admin/products/add" element={<AddProduct />} />
             </Routes>
           );
         } else {

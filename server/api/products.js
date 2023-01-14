@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Product = require("../db/models/Product");
+const Product = require('../db/models/Product')
 
 // GET /api/products/
 router.get("/", async (req, res, next) => {
@@ -35,9 +35,8 @@ router.get("/:category", async (req, res, next) => {
     }
 });
 
-
 // POST /api/products
-router.post('/products', async (req, res, next) => {
+router.post('/', async (req, res, next) => {
     try {
       res.send(await Product.create(req.body));
     } catch (error) {
