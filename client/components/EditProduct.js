@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { editProductAsync } from "../features/singleProductSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { selectSingleProduct } from "../features/singleProductSlice";
 import { fetchSingleProductAsync } from "../features/singleProductSlice";
 
 const EditProduct = () => {
   const [name, setName] = useState("");
+  const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const { productId } = useParams();
   const product = useSelector(selectSingleProduct)
@@ -30,6 +32,13 @@ const EditProduct = () => {
 
   return (
     <div>
+      <button>
+        <Link to={`/admin/products`}>Back to Products</Link>
+      </button>
+      <div>
+        <h1>Edit Product</h1>
+      </div>
+
       <form className="product-form" onSubmit={handleSubmit}>
         <label htmlFor="name">Product Name:</label>
         <input
@@ -40,6 +49,15 @@ const EditProduct = () => {
           onChange={(e) => setName(e.target.value)}
         />
         <br />
+        <label htmlFor="category">Product Category:</label>
+          <input
+            name="category"
+            defaultValue={product.category}
+            placeholder={product.category}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          />
+          <br />
         <label htmlFor="price">Price:</label>
         <input
           name="price"
@@ -58,6 +76,14 @@ const EditProduct = () => {
           onChange={(e) => setDescription(e.target.value)}
         />
         <br />
+        <label htmlFor="imageUrl">Image URL</label>
+          <input
+            name="imageUrl"
+            defaultValue={product.imageUrl}
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+          />
+          <br />
         <button type="submit">Update Product</button>
       </form>
     </div>

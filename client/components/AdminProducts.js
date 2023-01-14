@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteProductAsync, fetchProductsAsync, selectProducts } from "../features/productsSlice";
+import {
+  deleteProductAsync,
+  fetchProductsAsync,
+  selectProducts,
+} from "../features/productsSlice";
 import { Link } from "react-router-dom";
 
 const AdminProducts = () => {
@@ -9,50 +13,58 @@ const AdminProducts = () => {
 
   useEffect(() => {
     dispatch(fetchProductsAsync());
-  },[dispatch])
+  }, [dispatch]);
 
   const handleDelete = (productId) => {
     dispatch(deleteProductAsync(productId));
   };
 
   return (
-    <div>
-      <span>
-        <h1>All Products</h1>
-        <Link to={"/admin/products/add"}>
-          <button type="button" className="linked-button">
-            Add Product
-          </button>
-        </Link>
-      </span>
-      <ul>
-        {products && products.length
-          ? products.map((product) => (
-              <div key={product.id} className="product">
-                <li>
-                  <div>
-                    <span>
-                      ProductID: {product.id}, Name: {product.name}, Price: $
-                      {product.price}
-                    </span>
+    <>
+      <div class="control">
+        <span>
+          <h1>All Products</h1>
+          <Link to={"/admin/products/add"}>
+            <button type="button" className="linked-button">
+              Add Product
+            </button>
+          </Link>
+        </span>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products && products.length
+            ? products.map((product) => (
+                <tr key={product.id}>
+                  <td>{product.name}</td>
+                  <td>${product.price}</td>
+                  <td>
                     <Link to={`/admin/products/${product.id}`}>
-                      <button type="button" className="linked-button">
-                        Edit
-                      </button>
+                      <button class="button is-link edit-button">Edit</button>
                     </Link>
-                    <button
+                  </td>
+                  <td>
+                  <button
                       id="delete-button"
                       onClick={() => handleDelete(product.id)}
                     >
                       Delete
                     </button>
-                  </div>
-                </li>
-              </div>
-            ))
-          : null}
-      </ul>
-    </div>
+                  </td>
+                </tr>
+              ))
+            : null}
+        </tbody>
+      </table>
+    </>
   );
 };
 
