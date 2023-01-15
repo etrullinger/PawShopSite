@@ -53,10 +53,16 @@ const Products = () => {
                             </div>
                             <div >
                                 <div className='product-card_content'>
-                                    <h5>{product.name}</h5>
-                                    <p className='price-display'>${product.price}</p>
+                                    <div className='product-card-productName'>
+                                        <Link to={`/products/${product.id}`}>
+                                        <h5 className='product-name'>{product.name}</h5>
+                                        </Link>
+                                    </div>
+                                    <div className='product-card-productPrice'>
+                                        <p className='price-display'>${product.price}</p>
+                                    </div>
+                                    <Button className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>}>Add to Cart</Button>
                                 </div>
-                                {/* <Button className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>}>Add to Cart</Button> */}
                             </div>
                         </div>
                     ))
