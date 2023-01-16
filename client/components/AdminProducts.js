@@ -42,10 +42,21 @@ const AdminProducts = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center"><b>NAME</b></TableCell>
-              <TableCell align="center"><b>PRICE</b></TableCell>
-              <TableCell align="center"><b>EDIT</b></TableCell>
-              <TableCell align="center"><b>DELETE</b></TableCell>
+              <TableCell align="center">
+                <b>PRODUCT ID</b>
+              </TableCell>
+              <TableCell align="center">
+                <b>NAME</b>
+              </TableCell>
+              <TableCell align="center">
+                <b>PRICE</b>
+              </TableCell>
+              <TableCell align="center">
+                <b>EDIT</b>
+              </TableCell>
+              <TableCell align="center">
+                <b>DELETE</b>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -55,15 +66,12 @@ const AdminProducts = () => {
                     key={product.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
+                    <TableCell align="center">{product.id}</TableCell>
                     <TableCell align="center">{product.name}</TableCell>
                     <TableCell align="center">${product.price}</TableCell>
                     <TableCell align="center">
                       <Link to={`/admin/products/${product.id}`}>
-                        <Button
-                          variant="contained"
-                        >
-                          Edit
-                        </Button>
+                        <Button variant="contained">Edit</Button>
                       </Link>
                     </TableCell>
                     <TableCell align="center">

@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { selectSingleProduct } from "../features/singleProductSlice";
 import { fetchSingleProductAsync } from "../features/singleProductSlice";
-import Box from '@mui/material/Box';
-import Input from '@mui/material/Input';
-import TextField from '@mui/material/TextField';
+import Box from "@mui/material/Box";
+import Input from "@mui/material/Input";
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-
-const ariaLabel = { 'aria-label': 'description' };
+const ariaLabel = { "aria-label": "description" };
 
 const EditProduct = () => {
   const [name, setName] = useState("");
@@ -20,37 +19,43 @@ const EditProduct = () => {
   const [imageUrl, setImageUrl] = useState("");
 
   const { productId } = useParams();
-  const product = useSelector(selectSingleProduct)
+  const product = useSelector(selectSingleProduct);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   useEffect(() => {
-    dispatch(fetchSingleProductAsync(productId))
+    dispatch(fetchSingleProductAsync(productId));
   }, [dispatch]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(
-      editProductAsync({ name, price, description, productId })
-    );
+    dispatch(editProductAsync({ name, price, description, productId }));
     navigate("/admin/products");
   };
 
   return (
     <div>
       <Button variant="contained" className="is-linked">
-        <Link to={`/admin/products`} className="is-linked">Back to Products</Link>
+        <Link to={`/admin/products`} className="is-linked">
+          Back to Products
+        </Link>
       </Button>
       <div>
         <h1 align="center">Edit Product</h1>
       </div>
 
-      <Box className="form" component="form" align="center" sx={{
-        '& > :not(style)': { m: 1 },
-      }}
-      noValidate
-      autoComplete="off" onSubmit={handleSubmit}>
+      <Box
+        className="form"
+        component="form"
+        align="center"
+        sx={{
+          "& > :not(style)": { m: 1 },
+        }}
+        noValidate
+        autoComplete="off"
+        onSubmit={handleSubmit}
+      >
         <label htmlFor="name">Product Name:</label>
         <Input
           name="name"
@@ -61,14 +66,14 @@ const EditProduct = () => {
         />
         <br />
         <label htmlFor="category">Product Category:</label>
-          <Input
-            name="category"
-            defaultValue={product.category}
-            placeholder={product.category}
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          />
-          <br />
+        <Input
+          name="category"
+          defaultValue={product.category}
+          placeholder={product.category}
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
+        />
+        <br />
         <label htmlFor="price">Price:</label>
         <Input
           name="price"
@@ -89,14 +94,16 @@ const EditProduct = () => {
         />
         <br />
         <label htmlFor="imageUrl">Image URL</label>
-          <Input
-            name="imageUrl"
-            defaultValue={product.imageUrl}
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-          />
-          <br />
-        <Button variant="contained" type="submit">Update Product</Button>
+        <Input
+          name="imageUrl"
+          defaultValue={product.imageUrl}
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+        />
+        <br />
+        <Button variant="contained" type="submit">
+          Update Product
+        </Button>
       </Box>
     </div>
   );

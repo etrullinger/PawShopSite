@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { addProductAsync } from "../features/productsSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
-import Box from '@mui/material/Box';
-import Input from '@mui/material/Input';
-import TextField from '@mui/material/TextField';
+import Box from "@mui/material/Box";
+import Input from "@mui/material/Input";
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-const ariaLabel = { 'aria-label': 'description' };
+const ariaLabel = { "aria-label": "description" };
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -32,18 +32,26 @@ const AddProduct = () => {
   return (
     <>
       <Button variant="contained" className="is-linked">
-        <Link to={`/admin/products`} className="is-linked">Back to Products</Link>
+        <Link to={`/admin/products`} className="is-linked">
+          Back to Products
+        </Link>
       </Button>
       <div>
         <h1 align="center">Add New Product</h1>
       </div>
 
       <div>
-        <Box className="form" component="form" align="center" sx={{
-        '& > :not(style)': { m: 1 },
-      }}
-      noValidate
-      autoComplete="off" onSubmit={handleSubmit}>
+        <Box
+          className="form"
+          component="form"
+          align="center"
+          sx={{
+            "& > :not(style)": { m: 1 },
+          }}
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
           <label htmlFor="name">Product Name:</label>
           <Input
             name="name"
@@ -84,7 +92,9 @@ const AddProduct = () => {
             onChange={(e) => setImageUrl(e.target.value)}
           />
           <br />
-          <Button variant="contained" type="submit">Submit</Button>
+          <Button variant="contained" type="submit">
+            Submit
+          </Button>
         </Box>
       </div>
     </>
