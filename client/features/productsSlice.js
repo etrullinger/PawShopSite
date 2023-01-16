@@ -12,6 +12,26 @@ export const fetchProductsAsync = createAsyncThunk("products", async ()=> {
     }
 });
 
+export const addProductAsync = createAsyncThunk("products/add", async({ name, price, category, description, imageUrl }) => {
+    try{
+        const {data} = await axios.post(`/api/products`, {
+            name, price, category, description, imageUrl
+        });
+        console.log('add product data///', data)
+        return data;
+    } catch (error){
+        console.log(error);
+    }
+})
+
+export const deleteProductAsync = createAsyncThunk("products/delete", async (id) => {
+    try{
+        await axios.delete(`/api/products/${id}`);
+        return id;
+    } catch (error) {
+        console.log(error)
+    }
+});
 
 
 // * Here we invoke the createSlice function, and pass it an object with all of our state details
@@ -26,7 +46,14 @@ export const productsSlice = createSlice({
     // * When our thunk is fulfilled, we can return the value as our new state  
         builder.addCase(fetchProductsAsync.fulfilled, (state, action) => {
             return action.payload;
-        })
+        });
+        builder.addCase(addProductAsync.fulfilled, (state, action) => {
+            console.log('add product payload', action.payload)
+            state.push(action.payload);
+        });
+        builder.addCase(deleteProductAsync.fulfilled, (state, action) => {
+            return state.filter((product) => product.id !== action.payload)
+        });
     }
 })
 
