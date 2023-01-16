@@ -14,20 +14,28 @@ const Users = () => {
   return (
     <div>
       <h1>All Users</h1>
-      <ol>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>User ID#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
         {users && users.length
           ? users.map((user) => (
-              <div key={user.id} className="user">
-                <li>
-                  <p>
-                    UserID: {user.id}, Name:{" "}
-                    {`${user.firstName} ${user.lastName}`}, Email: {user.email}
-                  </p>
-                </li>
-              </div>
+              <tr key={user.id} className="user">
+                <td>{user.id}</td>
+                <td>{user.firstName}</td>
+                <td>{user.lastName}</td>
+                <td>{user.email}</td>   
+              </tr>
             ))
           : null}
-      </ol>
+          </tbody>
+      </table>
     </div>
   );
 };
