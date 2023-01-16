@@ -6,6 +6,13 @@ import {
   selectProducts,
 } from "../features/productsSlice";
 import { Link } from "react-router-dom";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Button from "@mui/material/Button";
 
 const AdminProducts = () => {
   const products = useSelector(selectProducts);
@@ -21,49 +28,59 @@ const AdminProducts = () => {
 
   return (
     <>
-      <div class="control">
+      <div>
         <span>
-          <h1>All Products</h1>
+          <h1 align="center">All Products</h1>
           <Link to={"/admin/products/add"}>
-            <button type="button" className="linked-button">
+            <Button variant="contained" className="linked-button">
               Add Product
-            </button>
+            </Button>
           </Link>
         </span>
       </div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Edit</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products && products.length
-            ? products.map((product) => (
-                <tr key={product.id}>
-                  <td>{product.name}</td>
-                  <td>${product.price}</td>
-                  <td>
-                    <Link to={`/admin/products/${product.id}`}>
-                      <button class="button is-link edit-button">Edit</button>
-                    </Link>
-                  </td>
-                  <td>
-                  <button
-                      id="delete-button"
-                      onClick={() => handleDelete(product.id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            : null}
-        </tbody>
-      </table>
+      <TableContainer>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="center"><b>NAME</b></TableCell>
+              <TableCell align="center"><b>PRICE</b></TableCell>
+              <TableCell align="center"><b>EDIT</b></TableCell>
+              <TableCell align="center"><b>DELETE</b></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {products && products.length
+              ? products.map((product) => (
+                  <TableRow
+                    key={product.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell align="center">{product.name}</TableCell>
+                    <TableCell align="center">${product.price}</TableCell>
+                    <TableCell align="center">
+                      <Link to={`/admin/products/${product.id}`}>
+                        <Button
+                          variant="contained"
+                        >
+                          Edit
+                        </Button>
+                      </Link>
+                    </TableCell>
+                    <TableCell align="center">
+                      <Button
+                        variant="contained"
+                        id="delete-button"
+                        onClick={() => handleDelete(product.id)}
+                      >
+                        Delete
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              : null}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 };

@@ -1,7 +1,7 @@
 * {
   box-sizing: border-box;
   font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
-  background-color:gainsboro;
+  /* background-color:gainsboro; */
 }
 
 #header {
@@ -30,4 +30,9 @@ label {
 form div {
   margin: 1em;
   display: inline-block;
+}
+
+.is-linked {
+  text-decoration: none;
+  color: white
 }

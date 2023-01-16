@@ -1,6 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsersAsync, selectUsers } from "../features/usersSlice";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+
 
 const Users = () => {
   const dispatch = useDispatch();
@@ -12,31 +19,34 @@ const Users = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <h1>All Users</h1>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>User ID#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
+    <><div>
+      <h1 align="center">All Users</h1>
+      </div>
+      <TableContainer>
+      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell align="center"><b>USER ID#</b></TableCell>
+            <TableCell align="center"><b>FIRST NAME</b></TableCell>
+            <TableCell align="center"><b>LAST NAME</b></TableCell>
+            <TableCell align="center"><b>EMAIL</b></TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
         {users && users.length
           ? users.map((user) => (
-              <tr key={user.id} className="user">
-                <td>{user.id}</td>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
-                <td>{user.email}</td>   
-              </tr>
+              <TableRow key={user.id} className="user">
+                <TableCell align="center">{user.id}</TableCell>
+                <TableCell align="center">{user.firstName}</TableCell>
+                <TableCell align="center">{user.lastName}</TableCell>
+                <TableCell align="center">{user.email}</TableCell>   
+              </TableRow>
             ))
           : null}
-          </tbody>
-      </table>
-    </div>
+          </TableBody>
+      </Table>
+      </TableContainer>
+      </>
   );
 };
 

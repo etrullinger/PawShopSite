@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import { addProductAsync } from "../features/productsSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
+import Box from '@mui/material/Box';
+import Input from '@mui/material/Input';
+import TextField from '@mui/material/TextField';
+import Button from "@mui/material/Button";
+
+const ariaLabel = { 'aria-label': 'description' };
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -25,17 +31,21 @@ const AddProduct = () => {
 
   return (
     <>
-      <button>
-        <Link to={`/admin/products`}>Back to Products</Link>
-      </button>
+      <Button variant="contained" className="is-linked">
+        <Link to={`/admin/products`} className="is-linked">Back to Products</Link>
+      </Button>
       <div>
-        <h1>Add New Product</h1>
+        <h1 align="center">Add New Product</h1>
       </div>
 
       <div>
-        <form className="product-form" onSubmit={handleSubmit}>
+        <Box className="form" component="form" align="center" sx={{
+        '& > :not(style)': { m: 1 },
+      }}
+      noValidate
+      autoComplete="off" onSubmit={handleSubmit}>
           <label htmlFor="name">Product Name:</label>
-          <input
+          <Input
             name="name"
             value={name}
             required
@@ -43,7 +53,7 @@ const AddProduct = () => {
           />
           <br />
           <label htmlFor="category">Product Category:</label>
-          <input
+          <Input
             name="category"
             value={category}
             required
@@ -51,7 +61,7 @@ const AddProduct = () => {
           />
           <br />
           <label htmlFor="price">Price:</label>
-          <input
+          <Input
             name="price"
             value={price}
             required
@@ -59,22 +69,23 @@ const AddProduct = () => {
           />
           <br />
           <label htmlFor="description">Description:</label>
-          <textarea
+          <TextField
             name="description"
+            variant="standard"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
           <br />
           <label htmlFor="imageUrl">Image URL</label>
-          <input
+          <Input
             name="imageUrl"
             value={imageUrl}
             required
             onChange={(e) => setImageUrl(e.target.value)}
           />
           <br />
-          <button type="submit">Submit</button>
-        </form>
+          <Button variant="contained" type="submit">Submit</Button>
+        </Box>
       </div>
     </>
   );

@@ -4,6 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { selectSingleProduct } from "../features/singleProductSlice";
 import { fetchSingleProductAsync } from "../features/singleProductSlice";
+import Box from '@mui/material/Box';
+import Input from '@mui/material/Input';
+import TextField from '@mui/material/TextField';
+import Button from "@mui/material/Button";
+
+
+const ariaLabel = { 'aria-label': 'description' };
 
 const EditProduct = () => {
   const [name, setName] = useState("");
@@ -32,16 +39,20 @@ const EditProduct = () => {
 
   return (
     <div>
-      <button>
-        <Link to={`/admin/products`}>Back to Products</Link>
-      </button>
+      <Button variant="contained" className="is-linked">
+        <Link to={`/admin/products`} className="is-linked">Back to Products</Link>
+      </Button>
       <div>
-        <h1>Edit Product</h1>
+        <h1 align="center">Edit Product</h1>
       </div>
 
-      <form className="product-form" onSubmit={handleSubmit}>
+      <Box className="form" component="form" align="center" sx={{
+        '& > :not(style)': { m: 1 },
+      }}
+      noValidate
+      autoComplete="off" onSubmit={handleSubmit}>
         <label htmlFor="name">Product Name:</label>
-        <input
+        <Input
           name="name"
           defaultValue={product.name}
           placeholder={product.name}
@@ -50,7 +61,7 @@ const EditProduct = () => {
         />
         <br />
         <label htmlFor="category">Product Category:</label>
-          <input
+          <Input
             name="category"
             defaultValue={product.category}
             placeholder={product.category}
@@ -59,7 +70,7 @@ const EditProduct = () => {
           />
           <br />
         <label htmlFor="price">Price:</label>
-        <input
+        <Input
           name="price"
           defaultValue={product.price}
           placeholder={product.price}
@@ -68,8 +79,9 @@ const EditProduct = () => {
         />
         <br />
         <label htmlFor="description">Description:</label>
-        <textarea
+        <TextField
           name="description"
+          variant="standard"
           defaultValue={product.description}
           placeholder={product.description}
           value={description}
@@ -77,15 +89,15 @@ const EditProduct = () => {
         />
         <br />
         <label htmlFor="imageUrl">Image URL</label>
-          <input
+          <Input
             name="imageUrl"
             defaultValue={product.imageUrl}
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
           />
           <br />
-        <button type="submit">Update Product</button>
-      </form>
+        <Button variant="contained" type="submit">Update Product</Button>
+      </Box>
     </div>
   );
 };
