@@ -19,7 +19,6 @@ nav {
 .nav-link {
   padding: 0 2em;
   text-decoration: none;
-  color:darkslategrey;
 }
 
 label {
@@ -31,6 +30,24 @@ form div {
   display: inline-block;
 }
 
+#single-product-container {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  margin: 2rem;
+}
+
+#single-product-details {
+  flex-direction: column;
+  padding: 2rem;
+  margin: 1rem;
+}
+
+#single-product-image {
+  display: flex;
+  align-self: center;
+  max-height: 20rem;
+}
 .category-filter {
   /* display: flex;
   justify-content: center;
@@ -85,8 +102,8 @@ form div {
   text-decoration: none;
   height: 72px;
   width: 100%;
-  display: flex; 
-  align-content: flex-end; 
+  display: flex;
+  align-content: flex-end;
 }
 
 .product-name {
