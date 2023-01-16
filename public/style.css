@@ -32,12 +32,13 @@ form div {
 }
 
 .category-filter {
-  display: flex;
+  /* display: flex;
   justify-content: center;
   align-items: center;
   margin: auto;
-  padding: 10px;
-  /* border: 2px yellowgreen solid; */
+  padding: 10px; */
+  border: 2px yellowgreen solid;
+  /* width: 200px; */
 }
 
 .product-listings_gridContainer {
