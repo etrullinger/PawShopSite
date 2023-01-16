@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { selectProducts } from '../features/productsSlice'
@@ -8,58 +8,32 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/mater
 
 // Write a component to display a list of all products (at least their name, category, price, short description, and a add to cart button)
 const Products = () => {
-    // store currently selected category
-    const [category, setCategory] = useState("");
     const products = useSelector(selectProducts)
 
-    // store search results
-    const [searchResults, setSearchResults] = useState([]);  
-    
-    const handleSearch = (e) => {
-        console.log("search button clicked!")
-        // e.preventDefault();
-        const results = products.filter(product => product.name.toLowerCase().includes(searchResults.toLowerCase()));
-        console.log("results-->", results)
-        setSearchResults(results);
-    }
+    const [productsData, setProductsData] = useState([]);
+    const [productSearchData, setProductSearchData] = useState([]);
+    const [name, setName] = useState('');
 
-    // Memoized results. Re-evaluates any time selected.
-    // category changes.
-    const filteredData = useMemo(()=>{
-        if(!category || category === "all") {
-            return products;
-        }
-        return products.filter(element => element.category === category)
-    }, [category, products, searchResults]);
+    React.useEffect(()=>{
+        setProductsData(products)
+        setProductSearchData(products)
+    }, [name, products])
 
-    let uniqueCategories = [...new Set(products.map((item) => item.category))];
+    const handleSearch = () => {
+        console.log("search button clicked")
+        const newData = productsData.filter((product) => product.name.toLowerCase().includes(name.toLowerCase()))
+        setProductSearchData(newData)
+    };
 
     return (
         <div>
             <div>
-                <TextField type="text" placeholder="Search for product..." onChange={(e) => setSearchResults(e.target.value)}/>
-                <Button onClick={ () => handleSearch() } variant="contained">Search</Button>
-            </div> 
-
-            <FormControl sx={{ minWidth: 220 }}  className='category-filter'>
-                <InputLabel>Category</InputLabel>
-                <Select 
-                    onChange={(e) => setCategory(e.target.value)}
-                    value={category}
-                    label="Category"
-                >
-                    <MenuItem value="all" onChange={(e) => setCategory(e.target.value)}>All</MenuItem>
-                    {
-                        uniqueCategories.map((category) => (
-                            <MenuItem onChange={(e) => setCategory(e.target.value)} key={category} value={category}>{category}</MenuItem>
-                        ))
-                    }
-                </Select>
-            </FormControl>
-
+                <TextField type='text' placeholder='Search product...' onChange={(e)=> setName(e.target.value) }/>
+                <Button variant='contained' onClick={()=> handleSearch()}>Search</Button>
+            </div>
             <div className='productListingGrid_overlayWrapper'>
                 <div className='product-listings_gridContainer'>
-                    {filteredData.map((product) =>(
+                    {productSearchData.map((product) =>(
                         <div key={product.id} className='product-card'>
                             <div className='product-card_canvas'>
                                 <div className='product-card-image'>
