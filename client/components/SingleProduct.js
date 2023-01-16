@@ -24,13 +24,19 @@ const SingleProduct = () => {
   return (
     <div id="single-product-page">
 
-      <Button component={Link} to={`/products`} variant="text">
+      <Button
+      component={Link}
+      to={`/products`}
+      variant="outlined"
+      size="small"
+      sx={{textTransform: "none"}}
+      >
       Back to Products</Button>
 
-      <div id="single-product-details">
-        <img alt={product.name} src={product.imageUrl}/>
-        
-        <div id="sinle-product-details">
+      <div id="single-product-container">
+        <img id="single-product-image" alt={product.name} src={product.imageUrl}/>
+
+        <div id="single-product-details">
           <h3>{product.name}</h3>
           <p>{product.category}</p>
           <p>{product.description}</p>
@@ -51,7 +57,10 @@ const SingleProduct = () => {
             ))}
           </TextField>
 
-          <Button variant="contained" endIcon={<AddShoppingCart />}>Add to Cart</Button>
+          <div>
+            <Button variant="contained" endIcon={<AddShoppingCart />}>Add to Cart</Button>
+          </div>
+
         </div>
       </div>
 
