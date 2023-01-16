@@ -46,4 +46,5 @@ form div {
 #single-product-image {
   display: flex;
   align-self: center;
+  max-height: 20rem;
 }
