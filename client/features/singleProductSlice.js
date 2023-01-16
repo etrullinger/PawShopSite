@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createNextState, createSlice } from "@reduxjs/toolkit";
 
 export const fetchSingleProductAsync = createAsyncThunk("singleProduct", async (productId) => {
   try {
@@ -7,6 +7,21 @@ export const fetchSingleProductAsync = createAsyncThunk("singleProduct", async (
     return data
   } catch (error) {
     console.log(error);
+  }
+});
+
+export const editProductAsync = createAsyncThunk('singleProduct/edit', async (editedProduct) => {
+  try{
+    const { name, price, description, category, productId } = editedProduct;
+    const { data } = await axios.put(`/api/products/${productId}`, {
+      name,
+      price,
+      description,
+      category
+    })
+    return data;
+  } catch(error){
+    console.log(error)
   }
 })
 
@@ -19,6 +34,9 @@ const singleProductSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchSingleProductAsync.fulfilled, (state, action) => {
       return action.payload
+    });
+    builder.addCase(editProductAsync.fulfilled, (state, action) => {
+      return action.payload;
     });
   }
 })
