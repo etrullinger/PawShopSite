@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleProductAsync, selectSingleProduct } from "../features/singleProductSlice";
 
@@ -18,12 +18,10 @@ const SingleProduct = () => {
 
   return (
     <div id="single-product-page">
-      <button>
-      <Link to={`/products`}>
-        Back to Products</Link>
-      </button>
+      <button><Link to={`/products`}>
+        Back to Products</Link></button>
       <h3>{product.name}</h3>
-      <p>{product.category}</p>
+      <p>Category: {product.category}</p>
       <img alt={product.name} src={product.imageUrl}/>
       <p>{product.description}</p>
       <p>${product.price}</p>
