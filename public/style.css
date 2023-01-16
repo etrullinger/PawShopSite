@@ -1,7 +1,6 @@
 * {
   box-sizing: border-box;
   font-family: 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
-  /* background-color:gainsboro; */
 }
 
 #header {
@@ -32,7 +31,91 @@ form div {
   display: inline-block;
 }
 
-.is-linked {
-  text-decoration: none;
-  color: white
+.category-filter {
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  padding: 10px; */
+  border: 2px yellowgreen solid;
+  /* width: 200px; */
 }
+
+.product-listings_gridContainer {
+  /* border: 1px red solid; */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.product-card {
+  border: 2px grey solid;
+  border-radius: 30px;
+  width: 292.66px;
+  height: 540.66px;
+  margin: 10px;
+  padding: 10px;
+}
+
+.product-card_canvas {
+  /* border: 1px blue solid; */
+  border-radius: 0.6rem 0.6rem 0 0;
+  height: 288.66px;
+  max-width: 288.66px;
+}
+
+.product-card_content {
+  /* border: 2px purple solid; */
+  padding: 1rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-grow: 1;
+  flex-direction: column;
+
+}
+
+.product-card-productName {
+  /* border: 2px green solid; */
+  line-height: 1.8rem;
+  /* font-weight: 400; */
+  letter-spacing: -.03em;
+  margin-bottom: .8rem;
+  text-decoration: none;
+  height: 72px;
+  width: 100%;
+  display: flex; 
+  align-content: flex-end; 
+}
+
+.product-name {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-decoration: none;
+  color: black;
+}
+
+.product-card-productPrice {
+    /* border: 2px orange solid; */
+    margin-top: 5px;
+    margin-bottom: 5px;
+    /* width: 217.66px; */
+    width: 100%;
+}
+
+.price-display {
+  color: red;
+}
+
+.product-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 272.66px;
+  max-height: 272.66px;
+  border-radius: 0.6rem 0.6rem 0 0;
+}
+
