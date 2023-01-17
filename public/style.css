@@ -31,14 +31,21 @@ form div {
   display: inline-block;
 }
 
-.category-filter {
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
+.searchAndCategoryFilter {
+  display: flex;
+  flex-direction: column;
+  /* border: 2px yellowgreen solid; */
+  width: 500px;
   margin: auto;
-  padding: 10px; */
-  border: 2px yellowgreen solid;
-  /* width: 200px; */
+}
+
+.search-function {
+  /* border: 1px orange solid; */
+}
+.category-filter {
+  display: flex;
+  /* border: 2px purple solid;  */
+  width: 100%;
 }
 
 .product-listings_gridContainer {
