@@ -46,7 +46,7 @@ export const productsSlice = createSlice({
     // * When our thunk is fulfilled, we can return the value as our new state  
         builder.addCase(fetchProductsAsync.fulfilled, (state, action) => {
             return action.payload;
-        });
+        })
         builder.addCase(addProductAsync.fulfilled, (state, action) => {
             console.log('add product payload', action.payload)
             state.push(action.payload);
