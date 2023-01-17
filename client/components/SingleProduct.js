@@ -9,9 +9,6 @@ const SingleProduct = () => {
   const { productId } = useParams();
   const product = useSelector(selectSingleProduct);
 
-  // const { name, category, description, price, imageUrl, id } = singleProduct
-  console.log('///Product///:', product.name)
-
   useEffect(() => {
     dispatch(fetchSingleProductAsync(productId))
   }, [dispatch]);

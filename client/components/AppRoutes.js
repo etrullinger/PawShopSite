@@ -5,9 +5,10 @@ import AuthForm from './AuthForm';
 import Account from './Account';
 import Products from './Products';
 import Orders from './Orders';
+import Cart from './Cart';
 import { me } from '../features/authSlice';
 import SingleProduct from './SingleProduct';
-import { fetchProductsAsync, selectProducts } from '../features/productsSlice';
+import { fetchProductsAsync } from '../features/productsSlice';
 
 /**
  * COMPONENT
@@ -15,11 +16,13 @@ import { fetchProductsAsync, selectProducts } from '../features/productsSlice';
 
 const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
+  const userId = useSelector((state) => state.auth.me.id);
+  console.log(userId)
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(me());
-    dispatch(fetchProductsAsync())
+    dispatch(fetchProductsAsync());
   }, [dispatch]);
 
   return (
@@ -27,8 +30,10 @@ const AppRoutes = () => {
       {isLoggedIn ? (
         <Routes>
           <Route path="/*" element={<Products />} />
-          <Route to="/account" element={<Account />} />
-          <Route to="/account/orders" element={<Orders />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/account" element={<Account userId={userId} />} />
+          <Route path="/account/orders/:userId" element={<Orders />} />
+          <Route path="/account/cart/:userId" element={<Cart userId={userId} />} />
         </Routes>
       ) : (
         <Routes>
