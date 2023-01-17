@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { selectProducts } from '../features/productsSlice'
 import Button from '@mui/material/Button'
@@ -17,7 +17,6 @@ const Products = () => {
     
     const handleSearch = (e) => {
         console.log("search button clicked!")
-        // e.preventDefault();
         const results = products.filter(product => product.name.toLowerCase().includes(searchResults.toLowerCase()));
         console.log("results-->", results)
         setSearchResults(results);

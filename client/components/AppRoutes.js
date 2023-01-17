@@ -7,11 +7,12 @@ import Products from "./Products";
 import Orders from "./Orders";
 import { me } from "../features/authSlice";
 import SingleProduct from "./SingleProduct";
-import { fetchProductsAsync, selectProducts } from "../features/productsSlice";
+import { fetchProductsAsync } from "../features/productsSlice";
 import Users from "./Users";
 import AdminProducts from "./AdminProducts";
 import EditProduct from "./EditProduct";
 import AddProduct from "./AddProduct";
+import Cart from "./Cart";
 
 /**
  * COMPONENT
@@ -20,6 +21,7 @@ import AddProduct from "./AddProduct";
 const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const isAdmin = useSelector((state) => !!state.auth.me.admin);
+  const userId = useSelector((state) => state.auth.me.id);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -35,8 +37,9 @@ const AppRoutes = () => {
             <Routes>
               <Route path="/*" element={<Products />} />
               <Route path="/products/:productId" element={<SingleProduct />} />
-              <Route to="/account" element={<Account />} />
-              <Route to="/account/orders" element={<Orders />} />
+              <Route path="/account" element={<Account userId={userId}/>} />
+              <Route path="/account/orders" element={<Orders />} />
+              <Route path="/account/cart/:userId" element={<Cart userId={userId}/>} />
             </Routes>
           );
         } else if (isLoggedIn && isAdmin) {
@@ -73,8 +76,10 @@ const AppRoutes = () => {
       {/* {isLoggedIn ? (
         <Routes>
           <Route path="/*" element={<Products />} />
-          <Route to="/account" element={<Account />} />
-          <Route to="/account/orders" element={<Orders />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/account" element={<Account userId={userId} />} />
+          <Route path="/account/orders/:userId" element={<Orders />} />
+          <Route path="/account/cart/:userId" element={<Cart userId={userId} />} />
         </Routes>
       ) : (
         <Routes>
