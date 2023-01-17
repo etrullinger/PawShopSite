@@ -51,8 +51,20 @@ const Products = () => {
             <div className='searchAndCategoryFilter'>
 
                 <div className='search-function'>
-                    <TextField fullWidth type="text" placeholder="Search for product..." onChange={(e) => setSearchResults(e.target.value)}/>
-                    <IconButton aria-label="search" size="large" onClick={ (e) => handleSearch(e.target.value) }>
+                    <TextField 
+                        fullWidth 
+                        type="text" 
+                        placeholder="Search for product..." 
+                        onChange={(e) => {
+                            setSearchResults(e.target.value)
+                            // handleSearch(e.target.value)
+                        }}
+                    />
+                    <IconButton 
+                        aria-label="search" 
+                        size="large" 
+                        onClick={ (e) => handleSearch(e.target.value) }
+                    >
                         <SearchIcon />
                     </IconButton>
                 </div> 
