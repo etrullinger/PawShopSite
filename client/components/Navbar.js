@@ -8,7 +8,7 @@ const Navbar = () => {
   const isAdmin = useSelector((state) => !!state.auth.me.admin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+
   const logoutAndRedirectHome = () => {
     dispatch(logout());
     navigate('/login');
@@ -48,6 +48,10 @@ const Navbar = () => {
             <Link to='/products' className='nav-link'>Shop</Link>
             <Link to="/login" className='nav-link'>Login</Link>
             <Link to="/signup" className='nav-link'>Sign Up</Link>
+
+            {/* conditional for showing guestCart vs Cart tbd... */}
+            <Link to="/guestCart" className='nav-link'>Cart</Link>
+
           </div>
             )
           }

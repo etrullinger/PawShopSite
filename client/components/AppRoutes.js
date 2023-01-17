@@ -13,6 +13,7 @@ import AdminProducts from "./AdminProducts";
 import EditProduct from "./EditProduct";
 import AddProduct from "./AddProduct";
 import Cart from "./Cart";
+import GuestCart from "./GuestCart";
 
 /**
  * COMPONENT
@@ -66,6 +67,7 @@ const AppRoutes = () => {
               />
               <Route path="/products" element={<Products />} />
               <Route path="/products/:productId" element={<SingleProduct />} />
+              <Route path="/guestCart" element={ <GuestCart /> } />
             </Routes>
           );
         }
@@ -106,6 +108,6 @@ const AppRoutes = () => {
           />
         </Routes>
       )} */}
- 
+
 
 export default AppRoutes;
