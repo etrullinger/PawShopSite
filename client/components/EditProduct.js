@@ -9,12 +9,12 @@ import Input from "@mui/material/Input";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
-const ariaLabel = { "aria-label": "description" };
+// const ariaLabel = { "aria-label": "description" };
 
 const EditProduct = () => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
-  const [price, setPrice] = useState("");
+  const [price, setPrice] = useState(null);
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
 
@@ -30,7 +30,7 @@ const EditProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(editProductAsync({ name, price, description, productId }));
+    dispatch(editProductAsync({ name, price, category, description, imageUrl, productId }));
     navigate("/admin/products");
   };
 
@@ -45,66 +45,53 @@ const EditProduct = () => {
         <h1 align="center">Edit Product</h1>
       </div>
 
-      <Box
-        className="form"
-        component="form"
-        align="center"
-        sx={{
-          "& > :not(style)": { m: 1 },
-        }}
-        noValidate
-        autoComplete="off"
-        onSubmit={handleSubmit}
-      >
-        <label htmlFor="name">Product Name:</label>
-        <Input
+      <form className="product-form" onSubmit={handleSubmit}>
+        <label >Product Name:</label>
+        <input
           name="name"
-          defaultValue={product.name}
           placeholder={product.name}
           value={name}
+          required
           onChange={(e) => setName(e.target.value)}
         />
         <br />
-        <label htmlFor="category">Product Category:</label>
-        <Input
-          name="category"
-          defaultValue={product.category}
-          placeholder={product.category}
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        />
-        <br />
-        <label htmlFor="price">Price:</label>
-        <Input
+        <label >Price:</label>
+        <input
           name="price"
-          defaultValue={product.price}
-          placeholder={product.price}
           value={price}
+          placeholder={product.price}
+          required
           onChange={(e) => setPrice(e.target.value)}
         />
         <br />
-        <label htmlFor="description">Description:</label>
-        <TextField
+        <label>Category:</label>
+        <input
+          name="category"
+          value={category}
+          placeholder={product.category}
+          required
+          onChange={(e) => setCategory(e.target.value)}
+        />
+        <br />
+        <label >Description:</label>
+        <textarea
           name="description"
-          variant="standard"
-          defaultValue={product.description}
-          placeholder={product.description}
           value={description}
+          placeholder={product.description}
+          required
           onChange={(e) => setDescription(e.target.value)}
         />
         <br />
-        <label htmlFor="imageUrl">Image URL</label>
-        <Input
+        <label>Image URL:</label>
+        <input
           name="imageUrl"
-          defaultValue={product.imageUrl}
           value={imageUrl}
+          placeholder={product.imageUrl}
           onChange={(e) => setImageUrl(e.target.value)}
         />
         <br />
-        <Button variant="contained" type="submit">
-          Update Product
-        </Button>
-      </Box>
+        <button type="submit">Update Product</button>
+      </form>
     </div>
   );
 };
