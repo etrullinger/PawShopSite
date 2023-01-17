@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { selectProducts } from '../features/productsSlice'
 import Button from '@mui/material/Button'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { FormControl, IconButton, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 
 // Write a component to display a list of all products (at least their name, category, price, short description, and a add to cart button)
@@ -13,7 +13,7 @@ const Products = () => {
     const [category, setCategory] = useState("");
 
     // store search results
-    const [searchResults, setSearchResults] = useState([]);  
+    const [searchResults, setSearchResults] = useState("");  
     console.log("searchResults from outside of any function-->", searchResults)
     console.log("typeof searchResults-->", typeof searchResults)
     console.log("searchResults.length-->", searchResults.length)
@@ -51,13 +51,10 @@ const Products = () => {
             <div className='searchAndCategoryFilter'>
 
                 <div className='search-function'>
-                    <TextField 
-                        fullWidth 
-                        type="text" 
-                        placeholder="Search for product..." 
-                        onChange={(e) => setSearchResults(e.target.value)}
-                    />
-                    <Button onClick={ () => handleSearch() } variant="contained">Search</Button>
+                    <TextField fullWidth type="text" placeholder="Search for product..." onChange={(e) => setSearchResults(e.target.value)}/>
+                    <IconButton aria-label="search" size="large" onClick={ (e) => handleSearch(e.target.value) }>
+                        <SearchIcon />
+                    </IconButton>
                 </div> 
                 
                 <br/>
