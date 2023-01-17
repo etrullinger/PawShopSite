@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { selectProducts } from '../features/productsSlice'
 import Button from '@mui/material/Button'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { FormControl, IconButton, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { FormControl, IconButton, InputBase, InputLabel, MenuItem, Pagination, Paper, Select, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 
 // Write a component to display a list of all products (at least their name, category, price, short description, and a add to cart button)
@@ -14,17 +14,16 @@ const Products = () => {
 
     // store search results
     const [searchResults, setSearchResults] = useState("");  
-    console.log("searchResults from outside of any function-->", searchResults)
-    console.log("typeof searchResults-->", typeof searchResults)
-    console.log("searchResults.length-->", searchResults.length)
+    // console.log("searchResults from outside of any function-->", searchResults)
+    // console.log("typeof searchResults-->", typeof searchResults)
+    // console.log("searchResults.length-->", searchResults.length)
 
     const products = useSelector(selectProducts)
 
-    const handleSearch = (e) => {
-        console.log("search button clicked!")
-        // e.preventDefault();
+    const handleSearch = () => {
+        // console.log("search button clicked!")
         const results = products.filter(product => product.name.toLowerCase().includes(searchResults.toLowerCase()));
-        console.log("results from handleSearch-->", results)
+        // console.log("results from handleSearch-->", results)
         setSearchResults(results);
     }
 
@@ -46,27 +45,40 @@ const Products = () => {
 
     let uniqueCategories = [...new Set(products.map((item) => item.category))];
 
+    // handle change for pagination
+    const handleChange = (e, p) => {
+        // console.log(e, p)
+        console.log("e--> ", e)
+        console.log("p--> ", p)
+    }
+
     return (
         <div>
             <div className='searchAndCategoryFilter'>
 
                 <div className='search-function'>
-                    <TextField 
-                        fullWidth 
-                        type="text" 
-                        placeholder="Search for product..." 
-                        onChange={(e) => {
-                            setSearchResults(e.target.value)
-                            // handleSearch(e.target.value)
-                        }}
-                    />
-                    <IconButton 
-                        aria-label="search" 
-                        size="large" 
-                        onClick={ (e) => handleSearch(e.target.value) }
+                    <Paper
+                        component="form"
+                        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center'}}
                     >
-                        <SearchIcon />
-                    </IconButton>
+                        <InputBase 
+                            sx={{ ml: 1, flex: 1 }}
+                            type="search" 
+                            placeholder="Search" 
+                            onChange={(e) => {
+                                setSearchResults(e.target.value)
+                                // handleSearch(e.target.value)
+                            }}
+                        />
+                        <IconButton
+                            type="button" sx={{ p: '10px' }} 
+                            onClick={ (e) => handleSearch(e.target.value) }
+                            color={'primary'}
+                        >
+                            <SearchIcon />
+                        </IconButton>
+                    </Paper>
+
                 </div> 
                 
                 <br/>
@@ -120,7 +132,13 @@ const Products = () => {
                     }
                 </div>
             </div>
+            <Pagination 
+                count={10} 
+                color="primary"
+                onChange={handleChange}
+            >
 
+            </Pagination>
         </div>
     )
 }
