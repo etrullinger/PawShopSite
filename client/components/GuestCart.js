@@ -19,37 +19,33 @@ const GuestCart = () => {
   const allProducts = useSelector(selectProducts);
   const [ products, setProducts ] = useState(allProducts);
 
-
-
   let localCart = localStorage.getItem("cart");
 
   const [ cart, setCart ] = useState(JSON.parse(localCart));
   console.log("cart data that is parsed-->", cart)
   console.log("cart[0] data that is parsed-->", cart[0])
   console.log("cart[0].name data that is parsed-->", cart[0].name)
-  // console.log('///////cart/////:', JSON.parse(cart))
-  // console.log('///////cart[0].name/////:', JSON.parse(cart[0].name))
 
   // functionalities
-  const addItem = (item)  =>   {
-    //create a copy of our cart state, avoid overwritting existing state
-    let cartCopy = [...cart];
-    //assuming we have an ID field in our item
-    let { productId } = item;
-    //look for item in cart array
-    let existingItem = cartCopy.find(cartItem => cartItem.productId === productId)
-    // if item already exists
-    if(existingItem) {
-      existingItem.quantity += item.quantity // update item
-    } else {
-      cartCopy.push(item)
-    }
-    // update upp state
-    setCart(cartCopy)
-    // make cart a string and store in local space
-    let stringCart = JSON.stringify(cartCopy);
-    localStorage.setItem('cart', stringCart)
-  }
+  // const addItem = (item)  =>   {
+  //   //create a copy of our cart state, avoid overwritting existing state
+  //   let cartCopy = [...cart];
+  //   //assuming we have an ID field in our item
+  //   let { productId } = item;
+  //   //look for item in cart array
+  //   let existingItem = cartCopy.find(cartItem => cartItem.productId === productId)
+  //   // if item already exists
+  //   if(existingItem) {
+  //     existingItem.quantity += item.quantity // update item
+  //   } else {
+  //     cartCopy.push(item)
+  //   }
+  //   // update upp state
+  //   setCart(cartCopy)
+  //   // make cart a string and store in local space
+  //   let stringCart = JSON.stringify(cartCopy);
+  //   localStorage.setItem('cart', stringCart)
+  // }
 
   const editItem = (itemID, amount) => {
     let cartCopy = [...cart];
@@ -88,7 +84,21 @@ const GuestCart = () => {
     <div>
       <h3>Guest Shopping Cart</h3>
 
-      {cart && cart.length ? cart.map((item) => <h1>{item.name}</h1>) : null}
+      {cart && cart.length ? cart.map((item) =>
+      <div>
+        <img
+          className="single-product-image"
+          alt={item.name}
+          src={item.imageUrl}
+        />
+        <div>
+          <h3>{item.name}</h3>
+          <p>{item.description}</p>
+          <p>{item.price}</p>
+        </div>
+        <button>Remove from Cart</button>
+      </div>
+      ) : null}
 
       {/* {cart && cart.length ? cart.map((cartProduct) =>
         <div key={cartProduct.productId}>
