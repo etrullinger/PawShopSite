@@ -13,7 +13,7 @@ import AdminProducts from "./AdminProducts";
 import EditProduct from "./EditProduct";
 import AddProduct from "./AddProduct";
 import Cart from "./Cart";
-
+import Profile from "./Profile";
 /**
  * COMPONENT
  */
@@ -40,6 +40,7 @@ const AppRoutes = () => {
               <Route path="/account" element={<Account userId={userId}/>} />
               <Route path="/account/orders" element={<Orders />} />
               <Route path="/account/cart/:userId" element={<Cart userId={userId}/>} />
+              <Route path="/users/:userId" element={<Profile userId={userId} />} />
             </Routes>
           );
         } else if (isLoggedIn && isAdmin) {
