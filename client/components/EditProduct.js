@@ -5,11 +5,8 @@ import { useNavigate, useParams, Link } from "react-router-dom";
 import { selectSingleProduct } from "../features/singleProductSlice";
 import { fetchSingleProductAsync } from "../features/singleProductSlice";
 import Box from "@mui/material/Box";
-import Input from "@mui/material/Input";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-
-const ariaLabel = { "aria-label": "description" };
 
 const EditProduct = () => {
   const [name, setName] = useState("");
@@ -30,80 +27,98 @@ const EditProduct = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(editProductAsync({ name, price, description, productId }));
+    dispatch(
+      editProductAsync({
+        name,
+        price,
+        category,
+        description,
+        imageUrl,
+        productId,
+      })
+    );
     navigate("/admin/products");
   };
 
   return (
     <div>
-      <Button variant="contained" className="is-linked">
-        <Link to={`/admin/products`} className="is-linked">
-          Back to Products
-        </Link>
+      <Button
+        component={Link}
+        to={`/admin/products`}
+        variant="outlined"
+        size="small"
+        sx={{ textTransform: "none" }}
+      >
+        Back to Products
       </Button>
       <div>
         <h1 align="center">Edit Product</h1>
       </div>
-
       <Box
-        className="form"
         component="form"
-        align="center"
         sx={{
-          "& > :not(style)": { m: 1 },
+          "& .MuiTextField-root": { m: 1, width: "ch" },
         }}
         noValidate
         autoComplete="off"
+        align="center"
         onSubmit={handleSubmit}
       >
-        <label htmlFor="name">Product Name:</label>
-        <Input
-          name="name"
-          defaultValue={product.name}
-          placeholder={product.name}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <br />
-        <label htmlFor="category">Product Category:</label>
-        <Input
-          name="category"
-          defaultValue={product.category}
-          placeholder={product.category}
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        />
-        <br />
-        <label htmlFor="price">Price:</label>
-        <Input
-          name="price"
-          defaultValue={product.price}
-          placeholder={product.price}
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-        />
-        <br />
-        <label htmlFor="description">Description:</label>
-        <TextField
-          name="description"
-          variant="standard"
-          defaultValue={product.description}
-          placeholder={product.description}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <br />
-        <label htmlFor="imageUrl">Image URL</label>
-        <Input
-          name="imageUrl"
-          defaultValue={product.imageUrl}
-          value={imageUrl}
-          onChange={(e) => setImageUrl(e.target.value)}
-        />
-        <br />
-        <Button variant="contained" type="submit">
-          Update Product
-        </Button>
+        <div>
+          <TextField
+          focused
+            required
+            id="outlined-product-name"
+            label="Product Name"
+            placeholder={product.name}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <br />
+          <TextField
+          focused
+          required
+          id="outlined-price"
+            label="Price"
+            type="number"
+            value={price}
+            placeholder={product.price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+          <br />
+          <TextField
+          focused
+          required
+            label="Category"
+            id="outlined-category"
+            value={category}
+            placeholder={product.category}
+            onChange={(e) => setCategory(e.target.value)}
+          />
+          <br />
+          <TextField
+          focused
+            label="Description"
+            id="outlined-description"
+            value={description}
+            placeholder={product.description}
+            required
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <br />
+          <TextField
+          focused
+            label="Image URL"
+            id="outlined-imageUrl"
+            value={imageUrl}
+            placeholder={product.imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+          />
+          <br />
+          <Button variant="contained" type="submit">
+            Update Product
+          </Button>
+        </div>
       </Box>
     </div>
   );
