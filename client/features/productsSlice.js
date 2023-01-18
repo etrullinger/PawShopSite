@@ -17,7 +17,6 @@ export const addProductAsync = createAsyncThunk("products/add", async({ name, pr
         const {data} = await axios.post(`/api/products`, {
             name, price, category, description, imageUrl
         });
-        console.log('add product data///', data)
         return data;
     } catch (error){
         console.log(error);

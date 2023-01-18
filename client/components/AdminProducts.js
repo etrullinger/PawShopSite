@@ -31,11 +31,15 @@ const AdminProducts = () => {
       <div>
         <span>
           <h1 align="center">All Products</h1>
-          <Link to={"/admin/products/add"}>
-            <Button variant="contained" className="linked-button">
-              Add Product
-            </Button>
-          </Link>
+
+          <Button
+            component={Link}
+            to={"/admin/products/add"}
+            variant="contained"
+            sx={{ textTransform: "none" }}
+          >
+            Add Product
+          </Button>
         </span>
       </div>
       <TableContainer>
@@ -70,9 +74,11 @@ const AdminProducts = () => {
                     <TableCell align="center">{product.name}</TableCell>
                     <TableCell align="center">${product.price}</TableCell>
                     <TableCell align="center">
-                      <Link to={`/admin/products/${product.id}`}>
-                        <Button variant="contained">Edit</Button>
-                      </Link>
+                        <Button 
+                        component={Link}
+                        to={`/admin/products/${product.id}`}
+                        variant="contained"
+                        sx={{ textTransform: "none" }}>EDIT</Button>
                     </TableCell>
                     <TableCell align="center">
                       <Button

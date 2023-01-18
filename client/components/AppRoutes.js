@@ -13,7 +13,9 @@ import AdminProducts from "./AdminProducts";
 import EditProduct from "./EditProduct";
 import AddProduct from "./AddProduct";
 import Cart from "./Cart";
+import Profile from "./Profile";
 import Checkout from "./Checkout";
+import OrderComplete from "./OrderComplete";
 
 /**
  * COMPONENT
@@ -40,9 +42,11 @@ const AppRoutes = () => {
               <Route path="/products/:productId" element={<SingleProduct name='singleProduct' />} />
               <Route path="/account" element={<Account userId={userId} />} />
               <Route path="/account/orders" element={<Orders />} />
+              <Route path="/users/:userId" element={<Profile userId={userId} />} />
               <Route path="/account/cart/:userId" element={<Cart userId={userId} />} />
               <Route path="/account/cart/:userId/:productId" element={<SingleProduct name='cartProduct' />} />
               <Route path="/account/cart/:userId/checkout" element={<Checkout />} />
+              <Route path="/order-complete" element={<OrderComplete />}/>
             </Routes>
           );
         } else if (isLoggedIn && isAdmin) {

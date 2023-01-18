@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const { models: { User }} = require('../db')
-module.exports = router
+
 
 // GET /api/users
 router.get('/', async (req, res, next) => {
@@ -17,17 +17,27 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-//GET /api/users - for admin viewing only
-// router.get('/', async (req, res, next) => {
-//   try {
-//     const loggedInUser = await User.findByToken(req.headers.authorization);
-//     if(loggedInUser.admin){
-//       const users = await User.findAll({
-//         attributes: ['id', 'email', 'admin']
-//       });
-//       res.send(users);
-//     }
-//   } catch(error) {
-//     next(error)
-//   }
-// })
+router.get('/:userId', async (req, res, next) => {
+  try {
+      const user = await User.findByPk(req.params.userId, {
+        attributes: ['id', 'firstName', 'lastName', 'email']
+      });
+      res.send(user);
+  } catch(error) {
+    next(error)
+  }
+})
+
+// PUT /api/users/userId 
+router.put('/:userId', async (req, res, next) => {
+  try {
+      const user = await User.findByPk(req.params.userId, {
+        attributes: ['id', 'firstName', 'lastName', 'email']
+      });
+      res.send(await user.update(req.body));
+  } catch(error) {
+    next(error)
+  }
+})
+
+module.exports = router
