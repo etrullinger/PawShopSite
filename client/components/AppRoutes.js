@@ -14,6 +14,8 @@ import EditProduct from "./EditProduct";
 import AddProduct from "./AddProduct";
 import Cart from "./Cart";
 import GuestCart from "./GuestCart";
+import Profile from "./Profile";
+import Checkout from "./Checkout";
 
 /**
  * COMPONENT
@@ -37,10 +39,13 @@ const AppRoutes = () => {
           return (
             <Routes>
               <Route path="/*" element={<Products />} />
-              <Route path="/products/:productId" element={<SingleProduct />} />
-              <Route path="/account" element={<Account userId={userId}/>} />
+              <Route path="/products/:productId" element={<SingleProduct name='singleProduct' />} />
+              <Route path="/account" element={<Account userId={userId} />} />
               <Route path="/account/orders" element={<Orders />} />
-              <Route path="/account/cart/:userId" element={<Cart userId={userId}/>} />
+              <Route path="/users/:userId" element={<Profile userId={userId} />} />
+              <Route path="/account/cart/:userId" element={<Cart userId={userId} />} />
+              <Route path="/account/cart/:userId/:productId" element={<SingleProduct name='cartProduct' />} />
+              <Route path="/account/cart/:userId/checkout" element={<Checkout />} />
             </Routes>
           );
         } else if (isLoggedIn && isAdmin) {
@@ -68,6 +73,7 @@ const AppRoutes = () => {
               <Route path="/products" element={<Products />} />
               <Route path="/products/:productId" element={<SingleProduct />} />
               <Route path="/guestCart" element={ <GuestCart /> } />
+              <Route path="/products/:productId" element={<SingleProduct name='singleProduct' />} />
             </Routes>
           );
         }

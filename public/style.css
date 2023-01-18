@@ -30,20 +30,20 @@ form div {
   display: inline-block;
 }
 
-#single-product-container {
+.single-product-container {
   align-items: center;
   display: flex;
   flex-direction: row;
   margin: 2rem;
 }
 
-#single-product-details {
+.single-product-details {
   flex-direction: column;
   padding: 2rem;
   margin: 1rem;
 }
 
-#single-product-image {
+.single-product-image {
   display: flex;
   align-self: center;
   max-height: 20rem;
@@ -136,3 +136,18 @@ form div {
   border-radius: 0.6rem 0.6rem 0 0;
 }
 
+.proceed-to-checkout {
+  display: flex;
+  justify-content: center;
+}
+
+#checkout-page {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.checkout-container {
+  display: flex;
+  flex-direction: column;
+}
