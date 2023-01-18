@@ -155,3 +155,25 @@ form div {
 .paymentMethods {
   width: 120px
 }
+
+.checkout-left-item {
+  border: 2px solid black;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 15px;
+  align-content: space-between;
+  box-shadow: 5px 5px 10px #3874CB;
+}
+
+input {
+  margin: 5px
+}
+
+label {
+  margin-top: 5px;
+}
+
+.checkout-right-item {
+  margin-top: 50px;
+  margin-left: 100px;
+}
