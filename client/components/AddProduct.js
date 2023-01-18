@@ -6,8 +6,10 @@ import Box from "@mui/material/Box";
 import Input from "@mui/material/Input";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { useSelect } from "@mui/base";
+import { selectSingleProduct } from "../features/singleProductSlice";
 
-const ariaLabel = { "aria-label": "description" };
+// const ariaLabel = { "aria-label": "description" };
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -17,7 +19,6 @@ const AddProduct = () => {
   const [imageUrl, setImageUrl] = useState("");
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,71 +32,56 @@ const AddProduct = () => {
 
   return (
     <>
-      <Button variant="contained" className="is-linked">
-        <Link to={`/admin/products`} className="is-linked">
-          Back to Products
-        </Link>
-      </Button>
+      <button>
+        <Link to={`/admin/products`}>Back to Products</Link>
+      </button>
       <div>
-        <h1 align="center">Add New Product</h1>
+        <h1>Add New Product</h1>
       </div>
 
       <div>
-        <Box
-          className="form"
-          component="form"
-          align="center"
-          sx={{
-            "& > :not(style)": { m: 1 },
-          }}
-          noValidate
-          autoComplete="off"
-          onSubmit={handleSubmit}
-        >
-          <label htmlFor="name">Product Name:</label>
-          <Input
+        <form className="product-form" onSubmit={handleSubmit}>
+          <label>Product Name:</label>
+          <input
             name="name"
             value={name}
             required
             onChange={(e) => setName(e.target.value)}
           />
           <br />
-          <label htmlFor="category">Product Category:</label>
-          <Input
+          <label>Product Category:</label>
+          <input
             name="category"
             value={category}
             required
             onChange={(e) => setCategory(e.target.value)}
           />
           <br />
-          <label htmlFor="price">Price:</label>
-          <Input
+          <label>Price:</label>
+          <input
             name="price"
             value={price}
             required
             onChange={(e) => setPrice(e.target.value)}
           />
           <br />
-          <label htmlFor="description">Description:</label>
-          <TextField
+          <label>Description:</label>
+          <textarea
             name="description"
-            variant="standard"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
           <br />
-          <label htmlFor="imageUrl">Image URL</label>
-          <Input
+          <label>Image URL</label>
+          <input
             name="imageUrl"
             value={imageUrl}
             required
             onChange={(e) => setImageUrl(e.target.value)}
           />
           <br />
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
-        </Box>
+          <button type="submit">Submit</button>
+        </form>
       </div>
     </>
   );
