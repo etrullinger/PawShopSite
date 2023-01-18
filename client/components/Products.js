@@ -15,20 +15,11 @@ const Products = () => {
 
     // store search results
     const [searchResults, setSearchResults] = useState("");  
-    // console.log("searchResults from outside of any function-->", searchResults)
-    // console.log("typeof searchResults-->", typeof searchResults)
-    // console.log("searchResults.length-->", searchResults.length)
-
-    // // use useState() to store the current page number
-    // const [currentPage, setCurrentPage] = useState(1);
-
 
     const products = useSelector(selectProducts)
 
     const handleSearch = () => {
-        // console.log("search button clicked!")
         const results = products.filter(product => product.name.toLowerCase().includes(searchResults.toLowerCase()));
-        // console.log("results from handleSearch-->", results)
         setSearchResults(results);
     }
 
@@ -49,18 +40,6 @@ const Products = () => {
     }, [category, products, searchResults]);
 
     let uniqueCategories = [...new Set(products.map((item) => item.category))];
-
-    // handle change for pagination
-    // const handleChange = (e, p) => {
-    //     // console.log(e, p)
-    //     console.log("e--> ", e)
-    //     console.log("p--> ", p)
-
-    //     setCurrentPage(p)
-    // }
-
-    // const pageSize = 10;
-
 
     // Search button component to be placed in search bar. Ignore the red squiggly error for now.
     const SearchButton = () => (
@@ -140,13 +119,6 @@ const Products = () => {
                     }
                 </div>
             </div>
-            {/* <h1>Current page is {currentPage}</h1>
-            <Pagination 
-                count={10} 
-                color="primary"
-                onChange={handleChange}
-            >
-            </Pagination> */}
         </div>
     )
 }
