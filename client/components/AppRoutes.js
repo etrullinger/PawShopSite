@@ -12,6 +12,7 @@ import Users from "./Users";
 import AdminProducts from "./AdminProducts";
 import EditProduct from "./EditProduct";
 import AddProduct from "./AddProduct";
+import SearchBar from "./SearchBar";
 
 /**
  * COMPONENT
@@ -61,8 +62,9 @@ const AppRoutes = () => {
                 path="/signup"
                 element={<AuthForm name="signup" displayName="Sign Up" />}
               />
-              <Route path="/products" element={<Products />} />
+              <Route path="/products" element={<Products />} searchbar={SearchBar}/>
               <Route path="/products/:productId" element={<SingleProduct />} />
+              <Route path="/searchbar" element={<SearchBar/>}></Route>
             </Routes>
           );
         }

@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+// Note: Link is not a react-router-dom component. Use Link from material-ui component instead.
+// import { Link } from 'react-router-dom'
 import { selectProducts } from '../features/productsSlice'
 import Button from '@mui/material/Button'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { FormControl, IconButton, InputBase, InputLabel, MenuItem, Pagination, Paper, Select, TextField } from '@mui/material'
+import { FormControl, IconButton, InputBase, InputLabel, Link, MenuItem, Pagination, Paper, Select, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 
 // Write a component to display a list of all products (at least their name, category, price, short description, and a add to cart button)
@@ -17,6 +18,10 @@ const Products = () => {
     // console.log("searchResults from outside of any function-->", searchResults)
     // console.log("typeof searchResults-->", typeof searchResults)
     // console.log("searchResults.length-->", searchResults.length)
+
+    // // use useState() to store the current page number
+    // const [currentPage, setCurrentPage] = useState(1);
+
 
     const products = useSelector(selectProducts)
 
@@ -46,39 +51,41 @@ const Products = () => {
     let uniqueCategories = [...new Set(products.map((item) => item.category))];
 
     // handle change for pagination
-    const handleChange = (e, p) => {
-        // console.log(e, p)
-        console.log("e--> ", e)
-        console.log("p--> ", p)
-    }
+    // const handleChange = (e, p) => {
+    //     // console.log(e, p)
+    //     console.log("e--> ", e)
+    //     console.log("p--> ", p)
+
+    //     setCurrentPage(p)
+    // }
+
+    // const pageSize = 10;
+
+
+    // Search button component to be placed in search bar. Ignore the red squiggly error for now.
+    const SearchButton = () => (
+        <IconButton
+            type="button" sx={{ p: '10px' }} 
+            onClick={ (e) => handleSearch(e.target.value) }
+            color={'primary'}
+        >
+            <SearchIcon />
+        </IconButton>
+    )
+
 
     return (
         <div>
             <div className='searchAndCategoryFilter'>
 
                 <div className='search-function'>
-                    <Paper
-                        component="form"
-                        sx={{ p: '2px 4px', display: 'flex', alignItems: 'center'}}
-                    >
-                        <InputBase 
-                            sx={{ ml: 1, flex: 1 }}
-                            type="search" 
-                            placeholder="Search" 
-                            onChange={(e) => {
-                                setSearchResults(e.target.value)
-                                // handleSearch(e.target.value)
-                            }}
-                        />
-                        <IconButton
-                            type="button" sx={{ p: '10px' }} 
-                            onClick={ (e) => handleSearch(e.target.value) }
-                            color={'primary'}
-                        >
-                            <SearchIcon />
-                        </IconButton>
-                    </Paper>
-
+                    <TextField 
+                        fullWidth
+                        type="search" 
+                        placeholder="Search" 
+                        onChange={(e) => setSearchResults(e.target.value)}
+                        InputProps={{endAdornment: <SearchButton />}}
+                    />
                 </div> 
                 
                 <br/>
@@ -109,7 +116,7 @@ const Products = () => {
                         <div key={product.id} className='product-card'>
                             <div className='product-card_canvas'>
                                 <div className='product-card-image'>
-                                    <Link to={`/products/${product.id}`}>
+                                    <Link href={`/products/${product.id}`}>
                                         {<img className='product-image' src={product.imageUrl}/>}
                                     </Link>
                                 </div>
@@ -117,10 +124,11 @@ const Products = () => {
                             <div >
                                 <div className='product-card_content'>
                                     <div className='product-card-productName'>
-                                        <Link to={`/products/${product.id}`}>
-                                        <h5 className='product-name'>{product.name}</h5>
+                                        <Link underline="hover" href={`/products/${product.id}`} >
+                                        <p className='product-name'>{product.name}</p>
                                         </Link>
                                     </div>
+                                    <p> Category: {product.category}</p>
                                     <div className='product-card-productPrice'>
                                         <p className='price-display'>${product.price}</p>
                                     </div>
@@ -132,13 +140,13 @@ const Products = () => {
                     }
                 </div>
             </div>
+            {/* <h1>Current page is {currentPage}</h1>
             <Pagination 
                 count={10} 
                 color="primary"
                 onChange={handleChange}
             >
-
-            </Pagination>
+            </Pagination> */}
         </div>
     )
 }

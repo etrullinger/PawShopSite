@@ -6,7 +6,7 @@ import AppRoutes from './AppRoutes';
 const App = () => {
   return (
     <div>
-      <Navbar />
+      <Navbar/>
       <hr />
       <AppRoutes />
     </div>
