@@ -72,7 +72,7 @@ const AppRoutes = () => {
                 element={<AuthForm name="signup" displayName="Sign Up" />}
               />
               <Route path="/products" element={<Products />} />
-              <Route path="/products/:productId" element={<SingleProduct name='singleProduct' />} />
+              <Route path="/products/:productId" element={<SingleProduct />} />
             </Routes>
           );
         }
