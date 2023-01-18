@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { authenticate, authenticateSignup } from "../store/store";
 
 /**
@@ -11,8 +12,9 @@ import { authenticate, authenticateSignup } from "../store/store";
 const AuthForm = ({ name, displayName }) => {
   const { error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = async (evt) => {
     evt.preventDefault();
     const formName = evt.target.name;
     const email = evt.target.email.value;
@@ -20,10 +22,11 @@ const AuthForm = ({ name, displayName }) => {
     if (formName === 'signup') {
       const firstName = evt.target.firstName.value;
       const lastName = evt.target.lastName.value;
-      dispatch(authenticateSignup({ firstName, lastName, email, password, method: formName }));
+      await dispatch(authenticateSignup({ firstName, lastName, email, password, method: formName }));
     } else {
-      dispatch(authenticate({ email, password, method: formName }));
+      await dispatch(authenticate({ email, password, method: formName }));
     }
+    navigate('/');
   };
 
   return (

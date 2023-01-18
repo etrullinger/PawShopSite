@@ -1,16 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import authReducer from '../features/authSlice';
-import singleProductSlice from '../features/singleProductSlice.js';
-import productsSlice from '../features/productsSlice';
-import usersSlice from '../features/usersSlice'
+import singleProductReducer from '../features/singleProductSlice.js';
+import productsReducer from '../features/productsSlice';
+import usersReducer from '../features/usersSlice';
+import cartReducer from '../features/cartSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
-    singleProduct: singleProductSlice,
-    products: productsSlice,
-    users: usersSlice
+    singleProduct: singleProductReducer,
+    products: productsReducer,
+    users: usersReducer,
+    cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
