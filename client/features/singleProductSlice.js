@@ -44,7 +44,7 @@ const singleProductSlice = createSlice({
 })
 
 export const selectSingleProduct = (state) => {
-  console.log("state.singleProduct:", state.singleProduct)
+  // console.log("state.singleProduct:", state.singleProduct)
   return state.singleProduct;
 }
 

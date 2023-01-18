@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleProductAsync, selectSingleProduct } from "../features/singleProductSlice";
@@ -6,17 +6,36 @@ import { Button, MenuItem, TextField } from "@mui/material";
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 
 // Currently hardcoded quantities.
-const quantityValues = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
+const quantityValues = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
 
 const SingleProduct = (props) => {
+  const [ cart, setCart ] = useState([])
+
   const dispatch = useDispatch();
 
   const { productId } = useParams();
   const product = useSelector(selectSingleProduct);
 
+  const handleAddToCart = (item) => {
+    console.log("Add to cart CLicked")
+      let cartCopy = [...cart];
+
+      let { productId } = item;
+      let existingItem = cartCopy.find(cartItem => cartItem.productId === productId)
+      if(existingItem) {
+        existingItem.quantity += item.quantity // update item
+      } else {
+        cartCopy.push(item)
+      }
+      setCart(cartCopy)
+      let stringCart = JSON.stringify(cartCopy);
+      localStorage.setItem('cart', stringCart)
+      console.log("cart items:", cart)
+  };
+
   useEffect(() => {
     dispatch(fetchSingleProductAsync(productId))
-  }, [dispatch]);
+  }, [cart, dispatch]);
 
   return (
     <div id="single-product-page">
@@ -56,7 +75,7 @@ const SingleProduct = (props) => {
           </TextField>
 
           <div>
-            <Button variant="contained" endIcon={<AddShoppingCart />}>Add to Cart</Button>
+            <Button onClick={() => handleAddToCart(product)} variant="contained" endIcon={<AddShoppingCart />}>Add to Cart</Button>
           </div>
 
         </div>
