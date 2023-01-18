@@ -2,13 +2,13 @@ import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleProductAsync, selectSingleProduct } from "../features/singleProductSlice";
-import { Button, InputAdornment, MenuItem, TextField } from "@mui/material";
+import { Button, MenuItem, TextField } from "@mui/material";
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 
 // Currently hardcoded quantities.
 const quantityValues = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
 
-const SingleProduct = () => {
+const SingleProduct = (props) => {
   const dispatch = useDispatch();
 
   const { productId } = useParams();
@@ -22,18 +22,19 @@ const SingleProduct = () => {
     <div id="single-product-page">
 
       <Button
-      component={Link}
-      to={`/products`}
-      variant="outlined"
-      size="small"
-      sx={{textTransform: "none"}}
+        component={Link}
+        to={props.name === 'singleProduct' ? '/products' : '/account/cart/:userId'}
+        variant="outlined"
+        size="small"
+        sx={{textTransform: "none"}}
       >
-      Back to Products</Button>
+        {props.name === 'singleProduct' ? 'Back to Products' : 'Back to Cart'}
+      </Button>
 
-      <div id="single-product-container">
-        <img id="single-product-image" alt={product.name} src={product.imageUrl}/>
+      <div className="single-product-container">
+        <img className="single-product-image" alt={product.name} src={product.imageUrl}/>
 
-        <div id="single-product-details">
+        <div className="single-product-details">
           <h3>{product.name}</h3>
           <p>{product.category}</p>
           <p>{product.description}</p>
@@ -48,7 +49,7 @@ const SingleProduct = () => {
           sx={{width: "8rem"}}
           >
             {quantityValues.map((quantity) => (
-              <MenuItem key={quantity} value={quantity}>
+              <MenuItem key={`product ${product.id} quantity ${quantity}`} value={quantity}>
                 {quantity}
               </MenuItem>
             ))}
@@ -60,9 +61,6 @@ const SingleProduct = () => {
 
         </div>
       </div>
-
-
-
     </div>
   );
 
