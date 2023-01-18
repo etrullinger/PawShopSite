@@ -12,7 +12,7 @@ const store = configureStore({
     singleProduct: singleProductReducer,
     products: productsReducer,
     users: usersReducer,
-    cart: cartReducer
+    cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

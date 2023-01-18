@@ -10,6 +10,7 @@ const ProductsInOrders = require('./models/ProductsInOrders')
 
 //associations 
 Product.belongsToMany(User, { through: ProductsInCarts })
+ProductsInCarts.belongsTo(Product)
 
 User.hasMany(Order, { as: 'orders' })
 Order.belongsTo(User)

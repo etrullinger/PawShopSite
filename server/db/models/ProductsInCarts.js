@@ -6,7 +6,7 @@ const ProductsInCarts = db.define("productsInCarts", {
       type: Sequelize.INTEGER,
       validate: {
         min: 0,
-        max: 100
+        max: 50
       }
     },
 })
