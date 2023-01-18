@@ -38,6 +38,9 @@ const Users = () => {
               <TableCell align="center">
                 <b>EMAIL</b>
               </TableCell>
+              <TableCell align="center">
+                <b>PAYMENT TYPE</b>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -48,6 +51,7 @@ const Users = () => {
                     <TableCell align="center">{user.firstName}</TableCell>
                     <TableCell align="center">{user.lastName}</TableCell>
                     <TableCell align="center">{user.email}</TableCell>
+                    <TableCell align="center"><img className="paymentMethods" src="https://casscourtsmi.org/wp-content/uploads/2019/04/credit-cards.png"></img></TableCell>
                   </TableRow>
                 ))
               : null}

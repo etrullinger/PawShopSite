@@ -151,3 +151,7 @@ form div {
   display: flex;
   flex-direction: column;
 }
+
+.paymentMethods {
+  width: 120px
+}
