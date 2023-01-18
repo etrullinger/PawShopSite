@@ -3,13 +3,8 @@ import { addProductAsync } from "../features/productsSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate, Link } from "react-router-dom";
 import Box from "@mui/material/Box";
-import Input from "@mui/material/Input";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { useSelect } from "@mui/base";
-import { selectSingleProduct } from "../features/singleProductSlice";
-
-// const ariaLabel = { "aria-label": "description" };
 
 const AddProduct = () => {
   const [name, setName] = useState("");
@@ -31,59 +26,82 @@ const AddProduct = () => {
   };
 
   return (
-    <>
-      <button>
-        <Link to={`/admin/products`}>Back to Products</Link>
-      </button>
+    <div>
+      <Button
+        component={Link}
+        to={`/admin/products`}
+        variant="outlined"
+        size="small"
+        sx={{ textTransform: "none" }}
+      >
+        Back to Products
+      </Button>
       <div>
-        <h1>Add New Product</h1>
+        <h1 align="center">Add New Product</h1>
       </div>
 
-      <div>
-        <form className="product-form" onSubmit={handleSubmit}>
-          <label>Product Name:</label>
-          <input
-            name="name"
-            value={name}
+      <Box
+        component="form"
+        sx={{
+          "& .MuiTextField-root": { m: 1, width: "ch" },
+        }}
+        noValidate
+        autoComplete="off"
+        align="center"
+        onSubmit={handleSubmit}
+      >
+        <div>
+          <TextField
+            focused
             required
+            id="outlined-product-name"
+            label="Product Name"
+            value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <br />
-          <label>Product Category:</label>
-          <input
-            name="category"
-            value={category}
+          <TextField
+            focused
             required
-            onChange={(e) => setCategory(e.target.value)}
-          />
-          <br />
-          <label>Price:</label>
-          <input
-            name="price"
+            id="outlined-price"
+            label="Price"
+            type="number"
             value={price}
-            required
             onChange={(e) => setPrice(e.target.value)}
           />
           <br />
-          <label>Description:</label>
-          <textarea
-            name="description"
+          <TextField
+            focused
+            required
+            label="Category"
+            id="outlined-category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          />
+          <br />
+          <TextField
+            focused
+            label="Description"
+            id="outlined-description"
             value={description}
+            required
             onChange={(e) => setDescription(e.target.value)}
           />
           <br />
-          <label>Image URL</label>
-          <input
-            name="imageUrl"
+          <TextField
+            focused
+            label="Image URL"
+            id="outlined-imageUrl"
             value={imageUrl}
-            required
             onChange={(e) => setImageUrl(e.target.value)}
           />
           <br />
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    </>
+          <Button variant="contained" type="submit">
+            Submit Product
+          </Button>
+        </div>
+      </Box>
+    </div>
   );
 };
 
