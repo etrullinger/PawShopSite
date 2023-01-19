@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../store/store';
@@ -15,7 +15,15 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const cart = useSelector(selectCart)
+  const [ cart, setCart ] = useState(JSON.parse(localStorage.getItem("cart")));
+  const [cartCount, setCartCount] = useState(cart.length)
+
+  useEffect(() => {
+    (localStorage.cart) ? setCartCount(JSON.parse(localStorage.cart).length) : setCartCount(0)
+    if (cart) setCart(cart);
+  }, [cart, cartCount, localStorage.cart])
+
+  const userCart = useSelector(selectCart)
 
   const calculateTotalItems = (cart) => {
     var total = 0;
@@ -43,10 +51,10 @@ const Navbar = () => {
             {/* The navbar will show these links after you log in */}
             <Link to='/products' className='nav-link'>Shop</Link>
             <Link to="/account" className='nav-link'>Account</Link>
-           
+
             <Link to="/account/cart" className='nav-link'>
                   <IconButton aria-label="cart">
-                    <Badge badgeContent={calculateTotalItems(cart)} color="secondary">
+                    <Badge badgeContent={calculateTotalItems(userCart)} color="secondary">
                       <ShoppingCartIcon  color='success' fontSize="large" />
                     </Badge>
                   </IconButton>
@@ -79,8 +87,8 @@ const Navbar = () => {
                 {/* conditional for showing guestCart vs Cart tbd... */}
                 <Link to="/guestCart" className='nav-link'>
                   <IconButton aria-label="cart">
-                    <Badge badgeContent={JSON.parse(localStorage.cart).length} color="secondary">
-                      <ShoppingCartIcon color='success' fontSize="large" />
+                    <Badge badgeContent={cartCount} showZero color="primary">
+                      <ShoppingCartIcon  fontSize="large" />
                     </Badge>
                   </IconButton>
                 </Link>

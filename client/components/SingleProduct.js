@@ -48,7 +48,11 @@ const SingleProduct = (props) => {
       // since the value is in JSON string, parse to change back to an array
       let cartArray = JSON.parse(cart)
       // Send back to local storage with new product in string array
-      localStorage.setItem("cart", JSON.stringify([...cartArray, product]))
+      let newItem = { ...product, quantity: 1 }
+
+
+      localStorage.setItem("cart", JSON.stringify([...cartArray, newItem]))
+
     }
   }
 
