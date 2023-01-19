@@ -51,9 +51,9 @@ const AppRoutes = () => {
               <Route path="/account" element={<Account userId={userId} />} />
               <Route path="/account/orders" element={<Orders />} />
               <Route path="/users/:userId" element={<Profile userId={userId} />} />
-              <Route path={`/account/cart`} element={<Cart userId={userId} />} />
-              <Route path={`/account/cart/:productId`} element={<SingleProduct name='cartProduct' />} />
-              <Route path={`/account/cart/checkout`} element={<Checkout />} />
+              <Route path="/account/cart" element={<Cart userId={userId} />} />
+              <Route path="/account/cart/:productId" element={<SingleProduct name='cartProduct' />} />
+              <Route path="/account/cart/checkout" element={<Checkout />} />
               <Route path="/order-complete" element={<OrderComplete />}/>
             </Routes>
           );
@@ -89,39 +89,5 @@ const AppRoutes = () => {
          </div>
   );
 };
-      {/* {isLoggedIn ? (
-        <Routes>
-          <Route path="/*" element={<Products />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/account" element={<Account userId={userId} />} />
-          <Route path="/account/orders/:userId" element={<Orders />} />
-          <Route path="/account/cart/:userId" element={<Cart userId={userId} />} />
-        </Routes>
-      ) : (
-        <Routes>
-
-          <Route
-            path="/*"
-            element={<Products />}
-          />
-          <Route
-            path="/login"
-            element={<AuthForm name="login" displayName="Login" />}
-          />
-          <Route
-            path="/signup"
-            element={<AuthForm name="signup" displayName="Sign Up" />}
-          />
-          <Route
-            path='/products'
-            element={ <Products />}
-          />
-          <Route
-            path="/products/:productId"
-            element={ <SingleProduct /> }
-          />
-        </Routes>
-      )} */}
-
 
 export default AppRoutes;

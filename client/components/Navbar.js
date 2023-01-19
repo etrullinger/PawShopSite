@@ -39,31 +39,32 @@ const Navbar = () => {
           } else if(isLoggedIn && isAdmin) {
             return (
               <div>
-            {/* The navbar will show these links after you log in */}
-            <Link to='/admin/products' className='nav-link'>Products</Link>
-            <Link to="/admin/users" className='nav-link'>Users</Link>
-            <button type="button" onClick={logoutAndRedirectHome}>
-              Logout
-            </button>
-          </div>
+                {/* The navbar will show these links after you log in */}
+                <Link to='/admin/products' className='nav-link'>Products</Link>
+                <Link to="/admin/users" className='nav-link'>Users</Link>
+                <button type="button" onClick={logoutAndRedirectHome}>
+                  Logout
+                </button>
+              </div>
             )
           } else {
             return (
               <div>
-            {/* The navbar will show these links before you log in */}
-            <Link to='/products' className='nav-link'>Shop</Link>
-            <Link to="/login" className='nav-link'>Login</Link>
-            <Link to="/signup" className='nav-link'>Sign Up</Link>
+                {/* The navbar will show these links before you log in */}
+                <Link to='/products' className='nav-link'>Shop</Link>
+                <Link to="/login" className='nav-link'>Login</Link>
+                <Link to="/signup" className='nav-link'>Sign Up</Link>
+                {/* <Link to="/guestCart" className='nav-link'>Cart</Link> */}
 
-            {/* conditional for showing guestCart vs Cart tbd... */}
-            <Link to="/guestCart" className='nav-link'>
-              <IconButton aria-label="cart">
-                <Badge badgeContent={localStorage.cart ? JSON.parse(localStorage.cart).length : 0 } color="secondary">
-                  <ShoppingCartIcon color='success' fontSize="large" />
-                </Badge>
-              </IconButton>
-            </Link>
-          </div>
+                {/* conditional for showing guestCart vs Cart tbd... */}
+                <Link to="/guestCart" className='nav-link'>
+                  <IconButton aria-label="cart">
+                    <Badge badgeContent={JSON.parse(localStorage.cart).length} color="secondary">
+                      <ShoppingCartIcon color='success' fontSize="large" />
+                    </Badge>
+                  </IconButton>
+                </Link>
+              </div>
             )
           }
         })()}

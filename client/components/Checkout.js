@@ -14,7 +14,7 @@ const Checkout = () => {
         <div id="checkout-shipping-info" className="checkout-left-item">
           <b>Shipping Information</b>
           <br />
-          <form>
+          <form className="checkout-form">
             <label>Address</label>
             <input
               type="text"
@@ -60,7 +60,7 @@ const Checkout = () => {
         <div id="checkout-payment-info" className="checkout-left-item">
           <b>Payment Info</b>
           <br />
-          <form>
+          <form className="checkout-form">
             Card Number:
             <input
               type="text"
