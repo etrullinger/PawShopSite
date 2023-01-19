@@ -16,6 +16,7 @@ import Cart from "./Cart";
 import GuestCart from "./GuestCart";
 import Profile from "./Profile";
 import Checkout from "./Checkout";
+import OrderComplete from "./OrderComplete";
 
 /**
  * COMPONENT
@@ -46,6 +47,7 @@ const AppRoutes = () => {
               <Route path="/account/cart/:userId" element={<Cart userId={userId} />} />
               <Route path="/account/cart/:userId/:productId" element={<SingleProduct name='cartProduct' />} />
               <Route path="/account/cart/:userId/checkout" element={<Checkout />} />
+              <Route path="/order-complete" element={<OrderComplete />}/>
             </Routes>
           );
         } else if (isLoggedIn && isAdmin) {

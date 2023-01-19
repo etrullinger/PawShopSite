@@ -1,10 +1,12 @@
 import React, { useMemo, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+// Note: Link is not a react-router-dom component. Use Link from material-ui component instead.
+// import { Link } from 'react-router-dom'
 import { selectProducts } from '../features/productsSlice'
 import Button from '@mui/material/Button'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { FormControl, IconButton, InputBase, InputLabel, Link, MenuItem, Pagination, Paper, Select, TextField } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search';
 import { selectSingleProduct } from '../features/singleProductSlice'
 import { InsertEmoticonTwoTone } from '@mui/icons-material'
 
@@ -12,28 +14,46 @@ import { InsertEmoticonTwoTone } from '@mui/icons-material'
 const Products = () => {
     // store currently selected category
     const [category, setCategory] = useState("");
-    const products = useSelector(selectProducts)
 
     // store search results
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState("");
 
-    const handleSearch = (e) => {
-        console.log("search button clicked!")
+    const products = useSelector(selectProducts)
+
+    const handleSearch = () => {
         const results = products.filter(product => product.name.toLowerCase().includes(searchResults.toLowerCase()));
-        console.log("results-->", results)
         setSearchResults(results);
     }
 
     // Memoized results. Re-evaluates any time selected.
     // category changes.
     const filteredData = useMemo(()=>{
+        // why does the order of these two conditionals matter?
+        if(typeof searchResults === "object" && searchResults.length > 0) {
+            console.log("searchResults from filteredData-->", searchResults)
+            return searchResults
+        }
+
         if(!category || category === "all") {
             return products;
         }
+
         return products.filter(element => element.category === category)
     }, [category, products, searchResults]);
 
     let uniqueCategories = [...new Set(products.map((item) => item.category))];
+
+    // Search button component to be placed in search bar. Ignore the red squiggly error for now.
+    const SearchButton = () => (
+        <IconButton
+            type="button" sx={{ p: '10px' }}
+            onClick={ (e) => handleSearch(e.target.value) }
+            color={'primary'}
+        >
+            <SearchIcon />
+        </IconButton>
+    )
+
 
     // handle add to local cart button
     // const product = useSelector(selectSingleProduct)
@@ -55,12 +75,12 @@ const Products = () => {
 
     return (
         <div>
-            <div>
+            {/* <div>
                 <TextField type="text" placeholder="Search for product..." onChange={(e) => setSearchResults(e.target.value)}/>
                 <Button onClick={ () => handleSearch() } variant="contained">Search</Button>
-            </div>
+            </div> */}
 
-            <FormControl sx={{ minWidth: 220 }}  className='category-filter'>
+            {/* <FormControl sx={{ minWidth: 220 }}  className='category-filter'>
                 <InputLabel>Category</InputLabel>
                 <Select
                     onChange={(e) => setCategory(e.target.value)}
@@ -74,15 +94,48 @@ const Products = () => {
                         ))
                     }
                 </Select>
-            </FormControl>
+            </FormControl> */}
+            <div className='searchAndCategoryFilter'>
+
+                <div className='search-function'>
+                    <TextField
+                        fullWidth
+                        type="search"
+                        placeholder="Search"
+                        onChange={(e) => setSearchResults(e.target.value)}
+                        InputProps={{endAdornment: <SearchButton />}}
+                    />
+                </div>
+
+                <br/>
+
+                <div className='category-filter'>
+                    <FormControl fullWidth>
+                        <InputLabel>Category</InputLabel>
+                        <Select
+                            onChange={(e) => setCategory(e.target.value)}
+                            value={category}
+                            label="Category"
+                        >
+                            <MenuItem value="all" onChange={(e) => setCategory(e.target.value)}>All</MenuItem>
+                            {
+                                uniqueCategories.map((category) => (
+                                    <MenuItem onChange={(e) => setCategory(e.target.value)} key={category} value={category}>{category}</MenuItem>
+                                ))
+                            }
+                        </Select>
+                    </FormControl>
+                </div>
+            </div>
+
 
             <div className='productListingGrid_overlayWrapper'>
                 <div className='product-listings_gridContainer'>
-                    {filteredData.map((product) =>(
+                    { filteredData.map((product) =>(
                         <div key={product.id} className='product-card'>
                             <div className='product-card_canvas'>
                                 <div className='product-card-image'>
-                                    <Link to={`/products/${product.id}`}>
+                                    <Link href={`/products/${product.id}`}>
                                         {<img className='product-image' src={product.imageUrl}/>}
                                     </Link>
                                 </div>
@@ -90,10 +143,11 @@ const Products = () => {
                             <div >
                                 <div className='product-card_content'>
                                     <div className='product-card-productName'>
-                                        <Link to={`/products/${product.id}`}>
-                                        <h5 className='product-name'>{product.name}</h5>
+                                        <Link underline="hover" href={`/products/${product.id}`} >
+                                        <p className='product-name'>{product.name}</p>
                                         </Link>
                                     </div>
+                                    <p> Category: {product.category}</p>
                                     <div className='product-card-productPrice'>
                                         <p className='price-display'>${product.price}</p>
                                     </div>
