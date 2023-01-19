@@ -8,6 +8,7 @@ import cartReducer from '../features/cartSlice';
 import singleUserReducer from '../features/singleUserSlice'
 import cartProductReducer from '../features/cartProductSlice';
 import ordersReducer from '../features/ordersSlice';
+import orderProductsReducer from '../features/orderProductsSlice';
 
 const store = configureStore({
   reducer: {
@@ -19,6 +20,7 @@ const store = configureStore({
     singleUser: singleUserReducer,
     cartProduct: cartProductReducer,
     orders: ordersReducer,
+    orderProducts: orderProductsReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

@@ -19,6 +19,7 @@ import Checkout from "./Checkout";
 import { selectCartProduct } from "../features/cartProductSlice";
 import { fetchCartAsync } from "../features/cartSlice";
 import OrderComplete from "./OrderComplete";
+import OrderDetail from "./OrderDetail";
 
 /**
  * COMPONENT
@@ -35,7 +36,7 @@ const AppRoutes = () => {
     dispatch(me());
     dispatch(fetchProductsAsync());
     if (isLoggedIn) {
-      dispatch(fetchCartAsync(userId))
+      dispatch(fetchCartAsync(userId));
     }
   }, [dispatch, userId, cartProduct.quantity]);
 
@@ -50,6 +51,7 @@ const AppRoutes = () => {
               <Route path="/products/:productId" element={<SingleProduct name='singleProduct' />} />
               <Route path="/account" element={<Account userId={userId} />} />
               <Route path="/account/orders" element={<Orders />} />
+              <Route path="/account/orders/:orderId" element={<OrderDetail />} />
               <Route path="/users/:userId" element={<Profile userId={userId} />} />
               <Route path="/account/cart" element={<Cart userId={userId} />} />
               <Route path="/account/cart/:productId" element={<SingleProduct name='cartProduct' />} />

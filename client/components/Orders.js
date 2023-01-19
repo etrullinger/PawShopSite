@@ -45,7 +45,7 @@ const Orders = () => {
             </Link>
           </div>
         ) : 
-          <div className="single-order-container">
+          <div className="single-order-detail">
             <h4>No recent orders.</h4>
             <p>You have not placed any orders yet.</p>
           </div>

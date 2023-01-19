@@ -35,6 +35,21 @@ router.get("/:userId", async (req, res, next) => {
     };
 });
 
+// DELETE /api/cart/:userId
+router.get("/:userId", async (req, res, next) => {
+    try {
+        const productsInCart = await ProductsInCarts.findAll({
+            where: {
+                userId: req.params.userId
+            }
+        });
+        await productsInCart.destroy();
+        res.send(productsInCart);
+    } catch (error) {
+        next(error);
+    };
+});
+
 // GET /api/cart/:userId/:productId
 router.get("/:userId/:productId", async (req, res, next) => {
     try {
