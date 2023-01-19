@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // Note: Link is not a react-router-dom component. Use Link from material-ui component instead.
 // import { Link } from 'react-router-dom'
@@ -9,7 +9,8 @@ import { FormControl, IconButton, InputLabel, Link, MenuItem, Select, TextField 
 import { selectCart, addToCartAsync } from '../features/cartSlice'
 import { updateCartProductAsync } from '../features/cartProductSlice'
 import SearchIcon from '@mui/icons-material/Search';
-import { InsertEmoticonTwoTone } from '@mui/icons-material'
+import { render } from 'react-dom';
+
 
 // Write a component to display a list of all products
 const Products = (props) => {
@@ -69,10 +70,9 @@ const Products = (props) => {
     )
 
 
-    // handle add to local cart button
-    // const product = useSelector(selectSingleProduct)
 
     const handleAddToCart2 = (item) => {
+        console.log('////item:', item)
         // check in inspect: JSON.parse(localStorage.cart)
         if (!localStorage.getItem("cart")){
             // if cart does not exist in local storage, create key:val of "cart" and "[product]"
@@ -83,9 +83,13 @@ const Products = (props) => {
             // since the value is in JSON string, parse to change back to an array
             let cartArray = JSON.parse(cart)
             // Send back to local storage with new product in string array
-            localStorage.setItem("cart", JSON.stringify([...cartArray, InsertEmoticonTwoTone]))
+            localStorage.setItem("cart", JSON.stringify([...cartArray, item]))
         }
     }
+
+    useEffect(() => {
+        localStorage.getItem("cart");
+    }, [cart])
 
     const isLoggedIn = useSelector((state) => !!state.auth.me.id);
 

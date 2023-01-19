@@ -1,51 +1,10 @@
+import { Button } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchCartAsync, selectCart } from '../features/cartSlice';
-import { selectProducts } from '../features/productsSlice';
-
-// const inCart = [{
-//   quantity: 1,
-//   productId: 10,
-//   userId: 2,
-//   }, {
-//   quantity: 2,
-//   productId: 2,
-//   userId: 2,
-//   },
-// ]
 
 const GuestCart = () => {
-  const allProducts = useSelector(selectProducts);
-  const [ products, setProducts ] = useState(allProducts);
 
-  let localCart = localStorage.getItem("cart");
-
-  const [ cart, setCart ] = useState(JSON.parse(localCart));
-  console.log("cart data that is parsed-->", cart)
-  console.log("cart[0] data that is parsed-->", cart[0])
-  console.log("cart[0].name data that is parsed-->", cart[0].name)
-
-  // functionalities
-  // const addItem = (item)  =>   {
-  //   //create a copy of our cart state, avoid overwritting existing state
-  //   let cartCopy = [...cart];
-  //   //assuming we have an ID field in our item
-  //   let { productId } = item;
-  //   //look for item in cart array
-  //   let existingItem = cartCopy.find(cartItem => cartItem.productId === productId)
-  //   // if item already exists
-  //   if(existingItem) {
-  //     existingItem.quantity += item.quantity // update item
-  //   } else {
-  //     cartCopy.push(item)
-  //   }
-  //   // update upp state
-  //   setCart(cartCopy)
-  //   // make cart a string and store in local space
-  //   let stringCart = JSON.stringify(cartCopy);
-  //   localStorage.setItem('cart', stringCart)
-  // }
+  const [ cart, setCart ] = useState(JSON.parse(localStorage.getItem("cart")));
 
   const editItem = (itemID, amount) => {
     let cartCopy = [...cart];
@@ -66,59 +25,55 @@ const GuestCart = () => {
     localStorage.setItem('cart', stringCart);
   }
 
-  const removeItem = (itemID) => {
-    let cartCopy = [...cart];
-    cartCopy = cartCopy.filter(item => item.productId !== itemID);
-    setCart(cartCopy);
-    let stringCart = JSON.stringify(cartCopy);
-    localStorage.setItem('cart', stringCart);
+  const removeItem = (item) => {
+    if (!localStorage.getItem){
+      localStorage.setItem('cart', JSON.stringify([]))
+    } else {
+      let cart = JSON.parse(localStorage.getItem("cart"))
+      console.log("cart:", cart)
+      console.log("item to remove:", item)
+
+      let filteredCart = cart.filter(product => product.id !== item.id)
+      console.log("filtered cart:", filteredCart)
+      setCart(filteredCart)
+      localStorage.setItem("cart", JSON.stringify([...filteredCart]))
+    }
   }
 
   useEffect(() => {
-    localCart = JSON.parse(localCart);
-    if (localCart) setCart(localCart);
-
-  }, []);
+    if (cart) setCart(cart);
+  }, [cart]);
 
   return (
     <div>
       <h3>Guest Shopping Cart</h3>
-
+      <div id="cart-products-container">
       {cart && cart.length ? cart.map((item) =>
-      <div>
+      <div key={item.id} className="single-product-container">
         <img
           className="single-product-image"
           alt={item.name}
           src={item.imageUrl}
         />
-        <div>
+        <div className="single-product-details">
           <h3>{item.name}</h3>
           <p>{item.description}</p>
           <p>{item.price}</p>
         </div>
-        <button>Remove from Cart</button>
+        <Button name="remove" variant="contained" size="small"onClick={() => removeItem(item)}>Remove</Button>
       </div>
       ) : null}
 
-      {/* {cart && cart.length ? cart.map((cartProduct) =>
-        <div key={cartProduct.productId}>
-          <div>{cartProduct.quantity}</div>
-
-          {cart.filter((product) => product.id === cartProduct.productId).map((product) =>
-          <div key={`cartProductDetails #${product.id}`}>
-            <p>{product.name}</p>
-            <p>{product.price}</p>
-
-            <Link to={`/products/${product.id}`}>
-              <img alt={product.name}  src={product.imageUrl} sx={{ width: 150, height: 150 }}/>
-            </Link>
-
-            <button onClick={() => handleRemove(product)}>Remove from Cart</button>
-          </div>)}
-
-        </div>
-      ) : null} */}
-
+      <div className='proceed-to-checkout'>
+        <Button
+          component={Link}
+          to={'/account/cart/checkout'}
+          variant="contained"
+        >
+          Proceed To Checkout
+        </Button>
+      </div>
+    </div>
     </div>
   )
 }
