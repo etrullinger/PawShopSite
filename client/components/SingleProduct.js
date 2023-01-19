@@ -2,17 +2,41 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSingleProductAsync, selectSingleProduct } from "../features/singleProductSlice";
+import { updateCartProductAsync } from "../features/cartProductSlice";
+import { addToCartAsync, selectCart } from "../features/cartSlice";
 import { Button, MenuItem, TextField } from "@mui/material";
 import AddShoppingCart from '@mui/icons-material/AddShoppingCart';
 
-// Currently hardcoded quantities.
-const quantityValues = [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ]
-
 const SingleProduct = (props) => {
+  const [quantityToAdd, setQuantityToAdd] = useState(1);
 
+  const isLoggedIn = useSelector((state) => !!state.auth.me.id);
+  const userId = useSelector((state) => state.auth.me.id);
   const dispatch = useDispatch();
   const { productId } = useParams();
   const product = useSelector(selectSingleProduct);
+  const cart = useSelector(selectCart);
+
+  var quantityValues = [];
+  for (var i = 1; i <= 50; i++) {
+    quantityValues.push(i);
+  }
+
+  const addToCart = async (userId, productId, quantity) => {
+    var newQuantity = quantity;
+    console.log(cart);
+    for (var product of cart) {
+        if (product.productId === productId) {
+          newQuantity += Number(product.quantity);
+          console.log(newQuantity)
+          await dispatch(updateCartProductAsync({userId, productId, quantity: newQuantity}));
+          setQuantityToAdd(1);
+          return;
+        }
+    }
+    await dispatch(addToCartAsync({ userId, productId, quantity: newQuantity }));
+    setQuantityToAdd(1);
+  };
 
   const handleAddToCart2 = () => {
     if (!localStorage.getItem("cart")){
@@ -56,11 +80,13 @@ const SingleProduct = (props) => {
 
           <TextField
           id="outlined-select-quantity"
+          name="quantity"
           select
           label="Quantity"
           defaultValue="1"
           helperText="Select Quantity"
           sx={{width: "8rem"}}
+          onChange={(evt) => setQuantityToAdd(evt.target.value)}
           >
             {quantityValues.map((quantity) => (
               <MenuItem key={`product ${product.id} quantity ${quantity}`} value={quantity}>
@@ -70,7 +96,13 @@ const SingleProduct = (props) => {
           </TextField>
 
           <div>
-            <Button onClick={() => handleAddToCart2()} variant="contained" endIcon={<AddShoppingCart />}>Add to Cart</Button>
+            <Button 
+            onClick={() => isLoggedIn ? addToCart(userId, product.id, Number(quantityToAdd)) : handleAddToCart2()} 
+            variant="contained" 
+            className="add-to-cart-button"
+            endIcon={<AddShoppingCart />}>
+              Add to Cart
+            </Button>
           </div>
 
         </div>

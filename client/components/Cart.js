@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchCartAsync, selectCart, removeFromCartAsync, addToCartAsync } from '../features/cartSlice';
+import { fetchCartAsync, selectCart, removeFromCartAsync } from '../features/cartSlice';
 import { updateCartProductAsync } from '../features/cartProductSlice';
 import { TextField, MenuItem, Button } from "@mui/material";
 

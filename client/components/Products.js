@@ -15,12 +15,13 @@ import { InsertEmoticonTwoTone } from '@mui/icons-material'
 const Products = (props) => {
     const [category, setCategory] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    
+
+    const isLoggedIn = useSelector((state) => !!state.auth.me.id);
     const products = useSelector(selectProducts);
     const cart = useSelector(selectCart);
 
     const dispatch = useDispatch();
-
+    
     const handleSearch = (e) => {
         const results = products.filter(product => product.name.toLowerCase().includes(searchResults.toLowerCase()));
         setSearchResults(results);
@@ -31,7 +32,6 @@ const Products = (props) => {
         for (var product of cart) {
             if (product.productId === productId) {
                 newQuantity += Number(product.quantity);
-                console.log(newQuantity)
                 await dispatch(updateCartProductAsync({userId, productId, quantity: newQuantity}));
                 return;
             }
@@ -68,7 +68,6 @@ const Products = (props) => {
         </IconButton>
     )
 
-
     // handle add to local cart button
     // const product = useSelector(selectSingleProduct)
 
@@ -86,9 +85,6 @@ const Products = (props) => {
             localStorage.setItem("cart", JSON.stringify([...cartArray, InsertEmoticonTwoTone]))
         }
     }
-
-    const isLoggedIn = useSelector((state) => !!state.auth.me.id);
-
 
     return (
         <div>
