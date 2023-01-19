@@ -5,27 +5,21 @@ import { useDispatch, useSelector } from 'react-redux'
 import { selectProducts } from '../features/productsSlice'
 import Button from '@mui/material/Button'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import { FormControl, IconButton, InputBase, InputLabel, Link, MenuItem, Pagination, Paper, Select, TextField } from '@mui/material'
+import { FormControl, IconButton, InputLabel, Link, MenuItem, Select, TextField } from '@mui/material'
 import { selectCart, addToCartAsync } from '../features/cartSlice'
 import { updateCartProductAsync } from '../features/cartProductSlice'
 import SearchIcon from '@mui/icons-material/Search';
-import { selectSingleProduct } from '../features/singleProductSlice'
 import { InsertEmoticonTwoTone } from '@mui/icons-material'
 
 // Write a component to display a list of all products
 const Products = (props) => {
-    // store currently selected category
     const [category, setCategory] = useState("");
-
-    // store search results
-    const products = useSelector(selectProducts)
-
-    const handleSearch = () => {
     const [searchResults, setSearchResults] = useState([]);
-
-    const dispatch = useDispatch();
+    
     const products = useSelector(selectProducts);
     const cart = useSelector(selectCart);
+
+    const dispatch = useDispatch();
 
     const handleSearch = (e) => {
         const results = products.filter(product => product.name.toLowerCase().includes(searchResults.toLowerCase()));
@@ -154,12 +148,10 @@ const Products = (props) => {
                                     <div className='product-card-productPrice'>
                                         <p className='price-display'>${product.price}</p>
                                     </div>
-                                    {
-                                        isLoggedIn ?
-                                            <Button onClick={() => handleAddToCart2(product)} className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>}>Add to Cart</Button>
-                                            :
-                                            <Button onClick={() => addToCart(props.userId, product.id, 1)} className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>}>Add to Cart</Button>
-
+                                    {isLoggedIn ?
+                                        <Button onClick={() => addToCart(props.userId, product.id, 1)} className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>}>Add to Cart</Button>
+                                        :
+                                        <Button onClick={() => handleAddToCart2(product)} className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>}>Add to Cart</Button>
                                     }
                                 </div>
                             </div>
@@ -172,6 +164,4 @@ const Products = (props) => {
     )
 }
 
-export default Products
-
-
+export default Products;
