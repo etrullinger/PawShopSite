@@ -9,17 +9,24 @@ import { FormControl, IconButton, InputBase, InputLabel, Link, MenuItem, Paginat
 import { selectCart, addToCartAsync } from '../features/cartSlice'
 import { updateCartProductAsync } from '../features/cartProductSlice'
 import SearchIcon from '@mui/icons-material/Search';
+import { selectSingleProduct } from '../features/singleProductSlice'
+import { InsertEmoticonTwoTone } from '@mui/icons-material'
 
-// Write a component to display a list of all products 
+// Write a component to display a list of all products
 const Products = (props) => {
     // store currently selected category
     const [category, setCategory] = useState("");
+
+    // store search results
+    const products = useSelector(selectProducts)
+
+    const handleSearch = () => {
     const [searchResults, setSearchResults] = useState([]);
-    
+
     const dispatch = useDispatch();
     const products = useSelector(selectProducts);
     const cart = useSelector(selectCart);
-    
+
     const handleSearch = (e) => {
         const results = products.filter(product => product.name.toLowerCase().includes(searchResults.toLowerCase()));
         setSearchResults(results);
@@ -49,8 +56,8 @@ const Products = (props) => {
 
         if(!category || category === "all") {
             return products;
-        } 
-        
+        }
+
         return products.filter(element => element.category === category)
     }, [category, products, searchResults]);
 
@@ -59,7 +66,7 @@ const Products = (props) => {
     // Search button component to be placed in search bar. Ignore the red squiggly error for now.
     const SearchButton = () => (
         <IconButton
-            type="button" sx={{ p: '10px' }} 
+            type="button" sx={{ p: '10px' }}
             onClick={ (e) => handleSearch(e.target.value) }
             color={'primary'}
         >
@@ -68,26 +75,47 @@ const Products = (props) => {
     )
 
 
+    // handle add to local cart button
+    // const product = useSelector(selectSingleProduct)
+
+    const handleAddToCart2 = (item) => {
+        // check in inspect: JSON.parse(localStorage.cart)
+        if (!localStorage.getItem("cart")){
+            // if cart does not exist in local storage, create key:val of "cart" and "[product]"
+            localStorage.setItem("cart", JSON.stringify([item]))
+        } else {
+            // since the key: "cart" exists in local storage, grab the JSON string value array
+            let cart = localStorage.getItem("cart")
+            // since the value is in JSON string, parse to change back to an array
+            let cartArray = JSON.parse(cart)
+            // Send back to local storage with new product in string array
+            localStorage.setItem("cart", JSON.stringify([...cartArray, InsertEmoticonTwoTone]))
+        }
+    }
+
+    const isLoggedIn = useSelector((state) => !!state.auth.me.id);
+
+
     return (
         <div>
             <div className='searchAndCategoryFilter'>
 
                 <div className='search-function'>
-                    <TextField 
+                    <TextField
                         fullWidth
-                        type="search" 
-                        placeholder="Search" 
+                        type="search"
+                        placeholder="Search"
                         onChange={(e) => setSearchResults(e.target.value)}
                         InputProps={{endAdornment: <SearchButton />}}
                     />
-                </div> 
-                
+                </div>
+
                 <br/>
 
                 <div className='category-filter'>
                     <FormControl fullWidth>
                         <InputLabel>Category</InputLabel>
-                        <Select 
+                        <Select
                             onChange={(e) => setCategory(e.target.value)}
                             value={category}
                             label="Category"
@@ -102,7 +130,7 @@ const Products = (props) => {
                     </FormControl>
                 </div>
             </div>
-            
+
 
             <div className='productListingGrid_overlayWrapper'>
                 <div className='product-listings_gridContainer'>
@@ -126,7 +154,13 @@ const Products = (props) => {
                                     <div className='product-card-productPrice'>
                                         <p className='price-display'>${product.price}</p>
                                     </div>
-                                    <Button className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>} onClick={() => addToCart(props.userId, product.id, 1)}>Add to Cart</Button>
+                                    {
+                                        isLoggedIn ?
+                                            <Button onClick={() => handleAddToCart2(product)} className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>}>Add to Cart</Button>
+                                            :
+                                            <Button onClick={() => addToCart(props.userId, product.id, 1)} className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>}>Add to Cart</Button>
+
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -139,3 +173,5 @@ const Products = (props) => {
 }
 
 export default Products
+
+
