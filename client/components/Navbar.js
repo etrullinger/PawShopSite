@@ -6,12 +6,24 @@ import { logout } from '../store/store';
 import Badge from '@mui/material/Badge';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Button from '@mui/material/Button'
+import { selectCart } from '../features/cartSlice';
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const isAdmin = useSelector((state) => !!state.auth.me.admin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const cart = useSelector(selectCart)
+
+  const calculateTotalItems = (cart) => {
+    var total = 0;
+    for(var product of cart) {
+      total += product.quantity
+    }
+    return total;
+  }
 
   const logoutAndRedirectHome = () => {
     dispatch(logout());
@@ -31,9 +43,17 @@ const Navbar = () => {
             {/* The navbar will show these links after you log in */}
             <Link to='/products' className='nav-link'>Shop</Link>
             <Link to="/account" className='nav-link'>Account</Link>
-            <button type="button" onClick={logoutAndRedirectHome}>
+           
+            <Link to="/account/cart" className='nav-link'>
+                  <IconButton aria-label="cart">
+                    <Badge badgeContent={calculateTotalItems(cart)} color="secondary">
+                      <ShoppingCartIcon  color='success' fontSize="large" />
+                    </Badge>
+                  </IconButton>
+                </Link>
+                <Button type="button" variant='outlined' onClick={logoutAndRedirectHome}>
               Logout
-            </button>
+            </Button>
           </div>
             )
           } else if(isLoggedIn && isAdmin) {
@@ -42,9 +62,9 @@ const Navbar = () => {
                 {/* The navbar will show these links after you log in */}
                 <Link to='/admin/products' className='nav-link'>Products</Link>
                 <Link to="/admin/users" className='nav-link'>Users</Link>
-                <button type="button" onClick={logoutAndRedirectHome}>
-                  Logout
-                </button>
+                <Button type="button" variant='outlined' onClick={logoutAndRedirectHome}>
+              Logout
+            </Button>
               </div>
             )
           } else {
