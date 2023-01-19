@@ -45,7 +45,7 @@ const Checkout = () => {
     var total = 0;
     total += Number(subtotal);
     total += Number(tax);
-    setOrderTotal(total);
+    setOrderTotal((Math.round(total*100)/100).toFixed(2));
   }
 
   useEffect(() => {

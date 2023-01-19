@@ -80,18 +80,26 @@ const Cart = (props) => {
             
           </div>
         </div>
-      ) : null}
+      ) : 
+        <div>
+          <h5>Your cart is empty.</h5>
+        </div>
+      }
       </div>
 
-      <div className='proceed-to-checkout'>
-        <Button 
-          component={Link} 
-          to={'/account/cart/checkout'}
-          variant="contained"
-        >
-          Proceed To Checkout
-        </Button>
-      </div>
+      {cart && cart.length ? 
+        <div className='proceed-to-checkout'>
+          <Button 
+            component={Link} 
+            to={'/account/cart/checkout'}
+            variant="contained"
+          >
+            Proceed To Checkout
+          </Button>
+        </div>
+      : null
+      }
+      
     </div>
   )
 }
