@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createAsyncThunk, createNextState, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchSingleProductAsync = createAsyncThunk("singleProduct", async (productId) => {
   try {
@@ -43,7 +43,7 @@ const singleProductSlice = createSlice({
 })
 
 export const selectSingleProduct = (state) => {
-  console.log("state.singleProduct:", state.singleProduct)
+  // console.log("state.singleProduct:", state.singleProduct)
   return state.singleProduct;
 }
 

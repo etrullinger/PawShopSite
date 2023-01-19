@@ -1,15 +1,23 @@
 const router = require("express").Router();
-const ProductsInCarts = require("../db/models/ProductsInCarts");
-const Product = require("../db/models/Product");
+const { models: { ProductsInCarts, Product }} = require('../db')
 
 // GET /api/cart
 router.get("/", async (req, res, next) => {
     try {
         const products = await ProductsInCarts.findAll();
         res.send(products);
+    } catch(error){
+        next(error);
+    };
+});
+
+// POST /api/cart
+router.post("/", async (req, res, next) => {
+    try {
+        res.status(201).send(await ProductsInCarts.create(req.body));
     } catch (error) {
         next(error);
-    }
+    };
 });
 
 // GET /api/cart/:userId
@@ -27,6 +35,22 @@ router.get("/:userId", async (req, res, next) => {
     };
 });
 
+// GET /api/cart/:userId/:productId
+router.get("/:userId/:productId", async (req, res, next) => {
+    try {
+        const productInCart = await ProductsInCarts.findOne({
+            where: {
+                userId: req.params.userId,
+                productId: req.params.productId
+            },
+            include: [Product]
+        });
+        res.send(productInCart);
+    } catch (error) {
+        next(error);
+    };
+});
+
 // PUT /api/cart/:userId/:productId
 router.put("/:userId/:productId", async (req, res, next) => {
     try {
@@ -34,7 +58,8 @@ router.put("/:userId/:productId", async (req, res, next) => {
             where: {
                 userId: req.params.userId,
                 productId: req.params.productId
-            }
+            },
+            include: [Product]
         });
         res.send(await productInCart.update(req.body));
     } catch (error) {
@@ -50,12 +75,13 @@ router.delete('/:userId/:productId', async (req, res, next) => {
                 userId: req.params.userId,
                 productId: req.params.productId
             },
+            include: [Product]
         });
         await productInCart.destroy();
         res.send(productInCart);
     } catch (error) {
         next(error);
-    };
+    }
 });
 
 module.exports = router
