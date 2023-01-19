@@ -34,7 +34,7 @@ const Orders = () => {
                 </div>
                 <div className="single-order-detail">
                   <h5 className="single-order-detail-row">Total</h5>
-                  <p className="single-order-detail-row">$FREE.99</p>
+                  <p className="single-order-detail-row">${order.total ? order.total : 'FREE.99'}</p>
                 </div>
                 <div className="single-order-detail">
                   <p className="single-order-detail-row">
