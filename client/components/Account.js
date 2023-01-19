@@ -14,7 +14,7 @@ const Account = (props) => {
       <div>
         <Link to={`/users/${props.userId}`} className='nav-link'>Profile</Link>
         <Link to="/account/orders" className='nav-link'>Order History</Link>
-        <Link to={`/account/cart/${props.userId}`} className='nav-link'>Cart</Link>
+        <Link to={`/account/cart`} className='nav-link'>Cart</Link>
       </div>
     </div>
   );

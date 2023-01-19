@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createAsyncThunk, createNextState, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchSingleProductAsync = createAsyncThunk("singleProduct", async (productId) => {
   try {
