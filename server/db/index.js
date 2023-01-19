@@ -12,10 +12,14 @@ const ProductsInOrders = require('./models/ProductsInOrders')
 Product.belongsToMany(User, { through: ProductsInCarts })
 ProductsInCarts.belongsTo(Product)
 
+Product.belongsToMany(Order, { through: ProductsInOrders })
+ProductsInOrders.belongsTo(Product)
+
+ProductsInOrders.belongsTo(Order)
+Order.hasMany(ProductsInOrders, { as: 'products' })
+
 User.hasMany(Order, { as: 'orders' })
 Order.belongsTo(User)
-
-Product.belongsToMany(Order, { through: ProductsInOrders })
 
 module.exports = {
   db,
