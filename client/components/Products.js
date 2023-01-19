@@ -9,23 +9,19 @@ import { FormControl, IconButton, InputBase, InputLabel, Link, MenuItem, Paginat
 import { selectCart, addToCartAsync } from '../features/cartSlice'
 import { updateCartProductAsync } from '../features/cartProductSlice'
 import SearchIcon from '@mui/icons-material/Search';
-import { selectSingleProduct } from '../features/singleProductSlice'
 import { InsertEmoticonTwoTone } from '@mui/icons-material'
 
 // Write a component to display a list of all products
 const Products = (props) => {
     // store currently selected category
     const [category, setCategory] = useState("");
-
+    const [searchResults, setSearchResults] = useState([]);
     // store search results
     const products = useSelector(selectProducts)
-
-    const handleSearch = () => {
-    const [searchResults, setSearchResults] = useState([]);
+    const cart = useSelector(selectCart);
 
     const dispatch = useDispatch();
-    const products = useSelector(selectProducts);
-    const cart = useSelector(selectCart);
+
 
     const handleSearch = (e) => {
         const results = products.filter(product => product.name.toLowerCase().includes(searchResults.toLowerCase()));
@@ -171,7 +167,5 @@ const Products = (props) => {
         </div>
     )
 }
-
 export default Products
-
 

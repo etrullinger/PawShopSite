@@ -30,7 +30,7 @@ const SingleProduct = (props) => {
 
   useEffect(() => {
     dispatch(fetchSingleProductAsync(productId))
-  }, [cart, dispatch]);
+  }, [dispatch]);
 
   return (
     <div id="single-product-page">

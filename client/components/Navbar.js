@@ -58,7 +58,7 @@ const Navbar = () => {
             {/* conditional for showing guestCart vs Cart tbd... */}
             <Link to="/guestCart" className='nav-link'>
               <IconButton aria-label="cart">
-                <Badge badgeContent={JSON.parse(localStorage.cart).length} color="secondary">
+                <Badge badgeContent={localStorage.cart ? JSON.parse(localStorage.cart).length : 0 } color="secondary">
                   <ShoppingCartIcon color='success' fontSize="large" />
                 </Badge>
               </IconButton>
