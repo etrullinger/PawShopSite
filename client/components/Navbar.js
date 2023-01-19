@@ -2,6 +2,10 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../store/store';
+// import Link from '@mui/material/Link';
+import Badge from '@mui/material/Badge';
+import IconButton from '@mui/material/IconButton';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Navbar = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
@@ -52,8 +56,13 @@ const Navbar = () => {
             <Link to="/signup" className='nav-link'>Sign Up</Link>
 
             {/* conditional for showing guestCart vs Cart tbd... */}
-            <Link to="/guestCart" className='nav-link'>Cart</Link>
-
+            <Link to="/guestCart" className='nav-link'>
+              <IconButton aria-label="cart">
+                <Badge badgeContent={JSON.parse(localStorage.cart).length} color="secondary">
+                  <ShoppingCartIcon color='success' fontSize="large" />
+                </Badge>
+              </IconButton>
+            </Link>
           </div>
             )
           }

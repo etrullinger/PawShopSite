@@ -75,26 +75,6 @@ const Products = () => {
 
     return (
         <div>
-            {/* <div>
-                <TextField type="text" placeholder="Search for product..." onChange={(e) => setSearchResults(e.target.value)}/>
-                <Button onClick={ () => handleSearch() } variant="contained">Search</Button>
-            </div> */}
-
-            {/* <FormControl sx={{ minWidth: 220 }}  className='category-filter'>
-                <InputLabel>Category</InputLabel>
-                <Select
-                    onChange={(e) => setCategory(e.target.value)}
-                    value={category}
-                    label="Category"
-                >
-                    <MenuItem value="all" onChange={(e) => setCategory(e.target.value)}>All</MenuItem>
-                    {
-                        uniqueCategories.map((category) => (
-                            <MenuItem onChange={(e) => setCategory(e.target.value)} key={category} value={category}>{category}</MenuItem>
-                        ))
-                    }
-                </Select>
-            </FormControl> */}
             <div className='searchAndCategoryFilter'>
 
                 <div className='search-function'>
