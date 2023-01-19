@@ -195,3 +195,17 @@ label {
   margin-top: 50px;
   margin-left: 100px;
 }
+
+.single-product-image.checkout {
+  width: 5em;
+}
+
+.single-product-container.checkout {
+  margin: 1em;
+}
+
+.single-product-details.checkout {
+  padding: 0 0 0 1em;
+  margin: 0 0 0 1em;
+  width: 12em;
+}
