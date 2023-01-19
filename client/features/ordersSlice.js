@@ -10,6 +10,19 @@ export const fetchOrdersAsync = createAsyncThunk("orders", async (userId) => {
   };
 });
 
+export const addOrderAsync = createAsyncThunk("orders/add", async ({ userId, invoiceId, total }) => {
+  try {
+    const {data} = await axios.post(`/api/orders`, {
+      invoiceId,
+      userId,
+      total
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+  };
+});
+
 export const ordersSlice = createSlice({
   name: "orders",
   initialState: [],
@@ -18,6 +31,10 @@ export const ordersSlice = createSlice({
     builder.addCase(fetchOrdersAsync.fulfilled, (state, action) => {
       return action.payload;
     });
+
+    builder.addCase(addOrderAsync.fulfilled, (state, action) => {
+      state.push(action.payload);
+    })
   }
 });
 

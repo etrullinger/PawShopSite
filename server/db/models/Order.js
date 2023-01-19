@@ -6,7 +6,14 @@ const Order = db.define('order', {
     type: Sequelize.STRING
   },
   orderDate: {
-    type: Sequelize.DATE
+    type: Sequelize.DATE,
+    defaultValue: Sequelize.NOW,
+  },
+  total: {
+    type: Sequelize.DECIMAL(10,2),
+    validate: {
+      min: 0.00
+    }
   }
 })
 

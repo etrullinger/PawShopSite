@@ -16,7 +16,7 @@ router.get("/", async (req, res, next) => {
 // POST /api/orders
 router.post("/", async (req, res, next) => {
   try {
-    res.status(201).send(await ProductsInOrders.create(req.body));
+    res.status(201).send(await Order.create(req.body));
   } catch (error) {
     next(error);
   };
@@ -29,7 +29,8 @@ router.get("/:userId", async (req, res, next) => {
       where: {
         userId: req.params.userId
       },
-      include: [ 'products' ]
+      order: [['orderDate', 'DESC']],
+      include: [ 'products' ],
     });
     res.send(orders);
   } catch (error) {
@@ -52,20 +53,13 @@ router.get("/:userId/:orderId", async (req, res, next) => {
   };
 });
 
-// GET /api/orders/:userId/:orderId/:productId
-router.get("/:userId/:orderId/:productId", async (req, res, next) => {
+// POST /api/orders/:userId/:orderId
+router.post("/:userId/:orderId", async (req, res, next) => {
   try {
-    const product = await ProductsInOrders.findOne({
-      where: {
-        orderId: req.params.orderId,
-        productId: req.params.productId
-      },
-      include: [Product, Order]
-    });
-    res.send(product);
+    res.status(201).send(await ProductsInOrders.create(req.body));
   } catch (error) {
     next(error);
-  }
+  };
 });
 
 module.exports = router;

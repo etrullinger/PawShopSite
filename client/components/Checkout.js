@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromCartAsync, selectCart } from "../features/cartSlice";
 import { updateCartProductAsync } from "../features/cartProductSlice";
 import { TextField, MenuItem, Button } from "@mui/material";
+import { addOrderAsync, fetchOrdersAsync, selectOrders } from "../features/ordersSlice";
+import { addOrderProductAsync } from "../features/orderProductsSlice";
 
 const Checkout = () => {
   const [address, setAddress] = useState("");
@@ -16,8 +18,10 @@ const Checkout = () => {
 
   const userId = useSelector((state) => state.auth.me.id);
   const cart = useSelector(selectCart);
+  const orders = useSelector(selectOrders);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleChange = async (userId, productId, quantity) => {
     await dispatch(updateCartProductAsync({ userId, productId, quantity}));
@@ -54,9 +58,33 @@ const Checkout = () => {
     calculateTotal();
   }, [handleChange, handleRemove])
 
+  useEffect(() => {
+    dispatch(fetchOrdersAsync(userId));
+  }, [dispatch])
+
   var quantityValues = [];
   for (var i = 0; i <= 50; i++) {
     quantityValues.push(i);
+  }
+
+  const placeOrder = async (userId, total) => {
+    var invoiceId = '';
+    var characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    for (var i = 0; i < 9; i++) {
+      invoiceId += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    await dispatch(addOrderAsync({userId, invoiceId, total}));
+    var orderId = orders[0].id;
+    for (var i=0; i < cart.length; i++) {
+      var productId = Number(cart[i].productId);
+      var quantity = Number(cart[i].quantity);
+      await dispatch(addOrderProductAsync({productId, orderId, quantity}));
+    }
+    for (var i=0; i < cart.length; i++) {
+      var productId = cart[i].productId;
+      await dispatch(removeFromCartAsync({userId, productId}));
+    }
+    navigate('/order-complete')
   }
 
   return (
@@ -194,8 +222,13 @@ const Checkout = () => {
       </div>
       <div id="checkout-right-container" className="checkout-container">
         <div id="checkout-place-order" className="checkout-right-item">
-          <Button component={Link}
-        to={`/order-complete`} variant="contained" type="submit">Place Order</Button>
+          <Button  
+          variant="contained" 
+          type="submit"
+          onClick={() => placeOrder(userId, orderTotal)}
+          >
+            Place Order
+          </Button>
 
           <div id="checkout-order-summary" className="checkout-right-item-section">
             <h4>Order Summary</h4>
@@ -213,7 +246,7 @@ const Checkout = () => {
             </p>
             <hr style={{height: '2px'}} />
             <h4>
-              <span>OrderTotal: </span>
+              <span>Order Total: </span>
               <span>${orderTotal}</span>
             </h4>
           </div>
