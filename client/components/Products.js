@@ -76,14 +76,26 @@ const Products = (props) => {
         // check in inspect: JSON.parse(localStorage.cart)
         if (!localStorage.getItem("cart")){
             // if cart does not exist in local storage, create key:val of "cart" and "[product]"
-            localStorage.setItem("cart", JSON.stringify([item]))
+            localStorage.setItem("cart", JSON.stringify([{...item, quantity: 1}]))
         } else {
             // since the key: "cart" exists in local storage, grab the JSON string value array
             let cart = localStorage.getItem("cart")
             // since the value is in JSON string, parse to change back to an array
             let cartArray = JSON.parse(cart)
             // Send back to local storage with new product in string array
-            localStorage.setItem("cart", JSON.stringify([...cartArray, item]))
+            let newItem = { ...item, quantity: 1 }
+            console.log("item w/ quantity:", newItem)
+
+            let existingItem = cartArray.find(item => item === newItem)
+            console.log("existing item? -->", existingItem)
+
+            if (existingItem !== undefined) {
+                existingItem.quantity += 1
+
+            } else {
+                localStorage.setItem("cart", JSON.stringify([...cartArray, newItem]))
+            }
+
         }
     }
 

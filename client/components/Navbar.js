@@ -8,17 +8,18 @@ import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Navbar = () => {
-  const [cartCount, setCartCount] = useState(0)
-
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const isAdmin = useSelector((state) => !!state.auth.me.admin);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const [ cart, setCart ] = useState(JSON.parse(localStorage.getItem("cart")));
+  const [cartCount, setCartCount] = useState(cart.length)
+
   useEffect(() => {
     (localStorage.cart) ? setCartCount(JSON.parse(localStorage.cart).length) : setCartCount(0)
-  }, [cartCount, localStorage.cart])
-
+    if (cart) setCart(cart);
+  }, [cart, cartCount, localStorage.cart])
 
   const logoutAndRedirectHome = () => {
     dispatch(logout());

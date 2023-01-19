@@ -1,12 +1,13 @@
-import { Button } from '@mui/material';
+import { Button, MenuItem, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const GuestCart = () => {
 
   const [ cart, setCart ] = useState(JSON.parse(localStorage.getItem("cart")));
+  console.log("What's in the cart? :", cart)
 
-  const editItem = (itemID, amount) => {
+  const editItem2 = (itemID, amount) => {
     let cartCopy = [...cart];
     //find if item exists, just in case
     let existingItem = cartCopy.find(item => item.productId === itemID);
@@ -25,16 +26,27 @@ const GuestCart = () => {
     localStorage.setItem('cart', stringCart);
   }
 
+  const editItem = (itemId, amount) => {
+    if (!localStorage.getItem){
+      localStorage.setItem('cart', JSON.stringify([]))
+    } else {
+      let cart = JSON.parse(localStorage.getItem("cart"))
+
+      const existingItem = cartArray.find(item => item.id === newItem.id)
+      if (!existingItem) return
+      existingItem.quantity += amount
+      if (existingItem.quantity <= 0)
+      console.log("newItem.quantity", newItem.quantity)
+    }
+  }
+
   const removeItem = (item) => {
     if (!localStorage.getItem){
       localStorage.setItem('cart', JSON.stringify([]))
     } else {
       let cart = JSON.parse(localStorage.getItem("cart"))
-      console.log("cart:", cart)
-      console.log("item to remove:", item)
-
+      console.log("cart//:", cart)
       let filteredCart = cart.filter(product => product.id !== item.id)
-      console.log("filtered cart:", filteredCart)
       setCart(filteredCart)
       localStorage.setItem("cart", JSON.stringify([...filteredCart]))
     }
@@ -43,6 +55,11 @@ const GuestCart = () => {
   useEffect(() => {
     if (cart) setCart(cart);
   }, [cart]);
+
+  var quantityValues = [];
+  for (var i = 1; i <= 50; i++) {
+    quantityValues.push(i);
+  }
 
   return (
     <div>
@@ -59,9 +76,29 @@ const GuestCart = () => {
           <h3>{item.name}</h3>
           <p>{item.description}</p>
           <p>{item.price}</p>
-        </div>
-        <Button name="remove" variant="contained" size="small"onClick={() => removeItem(item)}>Remove</Button>
-      </div>
+
+          <TextField
+            name='quantity'
+            select
+            label="Quantity"
+            defaultValue={item.quantity}
+            helperText="Edit Quantity"
+            sx={{width: "8rem"}}
+            onChange={(e) => editItem(item.id, item.quantity, e.target.value)}
+            >
+              {quantityValues.map((quantity) => (
+                <MenuItem
+                key={`cart product ${item.id} quantity ${item.quantity}`}
+                value={quantity}
+                >
+                  {quantity}
+                </MenuItem>
+              ))}
+            </TextField>
+
+            </div>
+              <Button name="remove" variant="contained" size="small"onClick={() => removeItem(item)}>Remove</Button>
+            </div>
       ) : null}
 
       <div className='proceed-to-checkout'>
