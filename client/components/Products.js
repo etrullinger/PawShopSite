@@ -6,22 +6,37 @@ import { selectProducts } from '../features/productsSlice'
 import Button from '@mui/material/Button'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { FormControl, IconButton, InputBase, InputLabel, Link, MenuItem, Pagination, Paper, Select, TextField } from '@mui/material'
+import { selectCart, addToCartAsync } from '../features/cartSlice'
+import { updateCartProductAsync } from '../features/cartProductSlice'
 import SearchIcon from '@mui/icons-material/Search';
 
-// Write a component to display a list of all products (at least their name, category, price, short description, and a add to cart button)
-const Products = () => {
+// Write a component to display a list of all products 
+const Products = (props) => {
     // store currently selected category
     const [category, setCategory] = useState("");
-
-    // store search results
-    const [searchResults, setSearchResults] = useState("");  
-
-    const products = useSelector(selectProducts)
-
-    const handleSearch = () => {
+    const [searchResults, setSearchResults] = useState([]);
+    
+    const dispatch = useDispatch();
+    const products = useSelector(selectProducts);
+    const cart = useSelector(selectCart);
+    
+    const handleSearch = (e) => {
         const results = products.filter(product => product.name.toLowerCase().includes(searchResults.toLowerCase()));
         setSearchResults(results);
-    }
+    };
+
+    const addToCart = async (userId, productId, quantity) => {
+        var newQuantity = quantity;
+        for (var product of cart) {
+            if (product.productId === productId) {
+                newQuantity += Number(product.quantity);
+                console.log(newQuantity)
+                await dispatch(updateCartProductAsync({userId, productId, quantity: newQuantity}));
+                return;
+            }
+        }
+        await dispatch(addToCartAsync({ userId, productId, quantity: newQuantity }));
+    };
 
     // Memoized results. Re-evaluates any time selected.
     // category changes.
@@ -111,7 +126,7 @@ const Products = () => {
                                     <div className='product-card-productPrice'>
                                         <p className='price-display'>${product.price}</p>
                                     </div>
-                                    <Button className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>}>Add to Cart</Button>
+                                    <Button className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>} onClick={() => addToCart(props.userId, product.id, 1)}>Add to Cart</Button>
                                 </div>
                             </div>
                         </div>

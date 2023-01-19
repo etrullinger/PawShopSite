@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import { fetchCartAsync, selectCart, updateCartAsync, removeFromCartAsync } from '../features/cartSlice';
+import { Link } from 'react-router-dom';
+import { fetchCartAsync, selectCart, removeFromCartAsync, addToCartAsync } from '../features/cartSlice';
+import { updateCartProductAsync } from '../features/cartProductSlice';
 import { TextField, MenuItem, Button } from "@mui/material";
 
 const Cart = (props) => {
   const cart = useSelector(selectCart); // array of user's cart products [{quantity, productId, userId}]
   const dispatch = useDispatch();
-  const { userId } = useParams();
 
   useEffect(() => {
-    dispatch(fetchCartAsync(userId));
-  }, [dispatch, cart.quantity, cart.length]);
+    dispatch(fetchCartAsync(props.userId));
+  }, [dispatch]);
 
   const handleChange = async (userId, productId, quantity) => {
-    await dispatch(updateCartAsync({ userId, productId, quantity}));
+    await dispatch(updateCartProductAsync({ userId, productId, quantity}));
   }
 
   const handleRemove = async (userId, productId) => {
@@ -35,18 +35,18 @@ const Cart = (props) => {
         className="single-product-container" 
         key={`cart${props.userId}: product #${product.productId}`}>
     
-          <Link to={`/account/cart/${props.userId}/${product.productId}`}>
+          <Link to={`/account/cart/${product.productId}`}>
             <img 
               className="single-product-image" 
-              alt={product.product.name} 
-              src={product.product.imageUrl} 
+              alt={product.product ? product.product.name : ""} 
+              src={product.product ? product.product.imageUrl : ""} 
             />
           </Link>
 
           <div className="single-product-details">
-            <h3>{product.product.name}</h3>
-            <p>{product.product.description}</p>
-            <p>${product.product.price}</p>
+            <h3>{product.product ? product.product.name : ""}</h3>
+            <p>{product.product ? product.product.description : ""}</p>
+            <p>${product.product ? product.product.price : '$0.00'}</p>
             
             <TextField
             name='quantity'
@@ -55,7 +55,7 @@ const Cart = (props) => {
             defaultValue={product.quantity}
             helperText="Edit Quantity"
             sx={{width: "8rem"}}
-            onChange={(evt) => handleChange(userId, product.productId, evt.target.value)}
+            onChange={(evt) => handleChange(props.userId, product.productId, evt.target.value)}
             >
               {quantityValues.map((quantity) => (
                 <MenuItem 
@@ -72,7 +72,7 @@ const Cart = (props) => {
                 name="remove"
                 variant="contained"
                 size="small"
-                onClick={() => handleRemove(userId, product.productId)}
+                onClick={() => handleRemove(props.userId, product.productId)}
               >
                 Remove
               </Button>
@@ -86,7 +86,7 @@ const Cart = (props) => {
       <div className='proceed-to-checkout'>
         <Button 
           component={Link} 
-          to={`/account/cart/${props.userId}/checkout`}
+          to={'/account/cart/checkout'}
           variant="contained"
         >
           Proceed To Checkout
