@@ -37,7 +37,6 @@ const singleProductSlice = createSlice({
       return action.payload
     });
     builder.addCase(editProductAsync.fulfilled, (state, action) => {
-      console.log('edit product payload', action.payload)
       return action.payload;
     });
   }

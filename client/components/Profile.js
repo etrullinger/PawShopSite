@@ -36,7 +36,7 @@ const Profile = () => {
         size="small"
         sx={{ textTransform: "none" }}
       >
-        Back to Profile
+        Back to Account
       </Button>
       <div>
         <h1 align="center">Edit Profile</h1>

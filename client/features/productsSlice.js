@@ -5,7 +5,6 @@ import axios from "axios";
 export const fetchProductsAsync = createAsyncThunk("products", async ()=> {
     try{
         const {data} = await axios.get(`/api/products`);
-        // console.log("data from fetchProductsAsync -->", data)
         return data
     } catch(error){
         console.log(error)
@@ -47,7 +46,6 @@ export const productsSlice = createSlice({
             return action.payload;
         })
         builder.addCase(addProductAsync.fulfilled, (state, action) => {
-            console.log('add product payload', action.payload)
             state.push(action.payload);
         });
         builder.addCase(deleteProductAsync.fulfilled, (state, action) => {
