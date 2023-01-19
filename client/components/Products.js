@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 // Note: Link is not a react-router-dom component. Use Link from material-ui component instead.
 // import { Link } from 'react-router-dom'
@@ -9,19 +9,21 @@ import { FormControl, IconButton, InputLabel, Link, MenuItem, Select, TextField 
 import { selectCart, addToCartAsync } from '../features/cartSlice'
 import { updateCartProductAsync } from '../features/cartProductSlice'
 import SearchIcon from '@mui/icons-material/Search';
-import { InsertEmoticonTwoTone } from '@mui/icons-material'
+import { render } from 'react-dom';
+
 
 // Write a component to display a list of all products
 const Products = (props) => {
     const [category, setCategory] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
+
     const isLoggedIn = useSelector((state) => !!state.auth.me.id);
     const products = useSelector(selectProducts);
     const cart = useSelector(selectCart);
 
     const dispatch = useDispatch();
-    
+
     const handleSearch = (e) => {
         const results = products.filter(product => product.name.toLowerCase().includes(searchResults.toLowerCase()));
         setSearchResults(results);
@@ -68,21 +70,33 @@ const Products = (props) => {
         </IconButton>
     )
 
-    // handle add to local cart button
-    // const product = useSelector(selectSingleProduct)
+
 
     const handleAddToCart2 = (item) => {
+        console.log('////item:', item)
         // check in inspect: JSON.parse(localStorage.cart)
         if (!localStorage.getItem("cart")){
             // if cart does not exist in local storage, create key:val of "cart" and "[product]"
-            localStorage.setItem("cart", JSON.stringify([item]))
+            localStorage.setItem("cart", JSON.stringify([{...item, quantity: 1}]))
         } else {
             // since the key: "cart" exists in local storage, grab the JSON string value array
             let cart = localStorage.getItem("cart")
             // since the value is in JSON string, parse to change back to an array
             let cartArray = JSON.parse(cart)
             // Send back to local storage with new product in string array
-            localStorage.setItem("cart", JSON.stringify([...cartArray, InsertEmoticonTwoTone]))
+            let newItem = { ...item, quantity: 1 }
+            console.log("item w/ quantity:", newItem)
+
+            let existingItem = cartArray.find(item => item === newItem)
+            console.log("existing item? -->", existingItem)
+
+            if (existingItem !== undefined) {
+                existingItem.quantity += 1
+
+            } else {
+                localStorage.setItem("cart", JSON.stringify([...cartArray, newItem]))
+            }
+
         }
     }
 
