@@ -16,7 +16,9 @@ const Navbar = () => {
 
   return (
     <div id='header'>
-      <h1 id='shop-title'>The Paw Shop</h1>
+      <div>
+        <img id='logo' src="https://i.imgur.com/QpAv4b8.png" />
+      </div>
       <nav>
         {(() => {
           if(isLoggedIn && !isAdmin) {
