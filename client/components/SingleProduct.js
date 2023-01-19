@@ -23,7 +23,7 @@ const SingleProduct = (props) => {
 
       <Button
         component={Link}
-        to={props.name === 'singleProduct' ? '/products' : '/account/cart/:userId'}
+        to={props.name === 'singleProduct' ? '/products' : '/account/cart'}
         variant="outlined"
         size="small"
         sx={{textTransform: "none"}}

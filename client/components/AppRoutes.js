@@ -15,6 +15,8 @@ import AddProduct from "./AddProduct";
 import Cart from "./Cart";
 import Profile from "./Profile";
 import Checkout from "./Checkout";
+import { selectCartProduct } from "../features/cartProductSlice";
+import { fetchCartAsync } from "../features/cartSlice";
 
 /**
  * COMPONENT
@@ -24,12 +26,16 @@ const AppRoutes = () => {
   const isLoggedIn = useSelector((state) => !!state.auth.me.id);
   const isAdmin = useSelector((state) => !!state.auth.me.admin);
   const userId = useSelector((state) => state.auth.me.id);
+  const cartProduct = useSelector(selectCartProduct);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(me());
     dispatch(fetchProductsAsync());
-  }, [dispatch]);
+    if (isLoggedIn) {
+      dispatch(fetchCartAsync(userId))
+    }
+  }, [dispatch, userId, cartProduct.quantity]);
 
   return (
     <div>
@@ -37,14 +43,15 @@ const AppRoutes = () => {
         if (isLoggedIn && !isAdmin) {
           return (
             <Routes>
-              <Route path="/*" element={<Products />} />
+              <Route path="/*" element={<Account userId={userId} />} />
+              <Route path="/products" element={<Products userId={userId}/>} />
               <Route path="/products/:productId" element={<SingleProduct name='singleProduct' />} />
               <Route path="/account" element={<Account userId={userId} />} />
               <Route path="/account/orders" element={<Orders />} />
               <Route path="/users/:userId" element={<Profile userId={userId} />} />
-              <Route path="/account/cart/:userId" element={<Cart userId={userId} />} />
-              <Route path="/account/cart/:userId/:productId" element={<SingleProduct name='cartProduct' />} />
-              <Route path="/account/cart/:userId/checkout" element={<Checkout />} />
+              <Route path={`/account/cart`} element={<Cart userId={userId} />} />
+              <Route path={`/account/cart/:productId`} element={<SingleProduct name='cartProduct' />} />
+              <Route path={`/account/cart/checkout`} element={<Checkout />} />
             </Routes>
           );
         } else if (isLoggedIn && isAdmin) {

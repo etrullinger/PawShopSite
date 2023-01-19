@@ -1,26 +1,40 @@
-import React, { useMemo, useState } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useMemo, useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { selectProducts } from '../features/productsSlice'
 import Button from '@mui/material/Button'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material'
+import { selectCart, addToCartAsync } from '../features/cartSlice'
+import { updateCartProductAsync } from '../features/cartProductSlice'
 
-// Write a component to display a list of all products (at least their name, category, price, short description, and a add to cart button)
-const Products = () => {
+// Write a component to display a list of all products 
+const Products = (props) => {
     // store currently selected category
     const [category, setCategory] = useState("");
-    const products = useSelector(selectProducts)
-
-    // store search results
-    const [searchResults, setSearchResults] = useState([]);  
+    const [searchResults, setSearchResults] = useState([]);
+    
+    const dispatch = useDispatch();
+    const products = useSelector(selectProducts);
+    const cart = useSelector(selectCart);
     
     const handleSearch = (e) => {
-        console.log("search button clicked!")
         const results = products.filter(product => product.name.toLowerCase().includes(searchResults.toLowerCase()));
-        console.log("results-->", results)
         setSearchResults(results);
-    }
+    };
+
+    const addToCart = async (userId, productId, quantity) => {
+        var newQuantity = quantity;
+        for (var product of cart) {
+            if (product.productId === productId) {
+                newQuantity += Number(product.quantity);
+                console.log(newQuantity)
+                await dispatch(updateCartProductAsync({userId, productId, quantity: newQuantity}));
+                return;
+            }
+        }
+        await dispatch(addToCartAsync({ userId, productId, quantity: newQuantity }));
+    };
 
     // Memoized results. Re-evaluates any time selected.
     // category changes.
@@ -77,7 +91,7 @@ const Products = () => {
                                     <div className='product-card-productPrice'>
                                         <p className='price-display'>${product.price}</p>
                                     </div>
-                                    <Button className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>}>Add to Cart</Button>
+                                    <Button className='add-to-cart-button' variant='contained' endIcon={<AddShoppingCartIcon/>} onClick={() => addToCart(props.userId, product.id, 1)}>Add to Cart</Button>
                                 </div>
                             </div>
                         </div>
