@@ -17,6 +17,8 @@ const Products = (props) => {
     const [category, setCategory] = useState("");
     const [searchResults, setSearchResults] = useState([]);
 
+
+    const isLoggedIn = useSelector((state) => !!state.auth.me.id);
     const products = useSelector(selectProducts);
     const cart = useSelector(selectCart);
 
@@ -32,7 +34,6 @@ const Products = (props) => {
         for (var product of cart) {
             if (product.productId === productId) {
                 newQuantity += Number(product.quantity);
-                console.log(newQuantity)
                 await dispatch(updateCartProductAsync({userId, productId, quantity: newQuantity}));
                 return;
             }
@@ -98,13 +99,6 @@ const Products = (props) => {
 
         }
     }
-
-    useEffect(() => {
-        localStorage.getItem("cart");
-    }, [cart])
-
-    const isLoggedIn = useSelector((state) => !!state.auth.me.id);
-
 
     return (
         <div>

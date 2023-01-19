@@ -196,3 +196,49 @@ label {
   margin-top: 50px;
   margin-left: 100px;
 }
+
+.single-product-image.checkout {
+  width: 5em;
+}
+
+.single-product-container.checkout {
+  margin: 1em;
+}
+
+.single-product-details.checkout {
+  padding: 0 0 0 1em;
+  margin: 0 0 0 1em;
+  width: 12em;
+}
+
+.link {
+  text-decoration: none;
+}
+
+a {
+  color: black;
+}
+
+a.link:hover {
+  border: 1px solid black;
+}
+
+a.nav-link:hover {
+  color: gainsboro;
+}
+
+.single-order-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.single-order-detail {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1em 2em;
+}
+
+.single-order-detail-row {
+  margin: 0.2em;
+}

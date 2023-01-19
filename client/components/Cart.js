@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchCartAsync, selectCart, removeFromCartAsync, addToCartAsync } from '../features/cartSlice';
+import { fetchCartAsync, selectCart, removeFromCartAsync } from '../features/cartSlice';
 import { updateCartProductAsync } from '../features/cartProductSlice';
 import { TextField, MenuItem, Button } from "@mui/material";
 
@@ -80,18 +80,26 @@ const Cart = (props) => {
             
           </div>
         </div>
-      ) : null}
+      ) : 
+        <div>
+          <h5>Your cart is empty.</h5>
+        </div>
+      }
       </div>
 
-      <div className='proceed-to-checkout'>
-        <Button 
-          component={Link} 
-          to={'/account/cart/checkout'}
-          variant="contained"
-        >
-          Proceed To Checkout
-        </Button>
-      </div>
+      {cart && cart.length ? 
+        <div className='proceed-to-checkout'>
+          <Button 
+            component={Link} 
+            to={'/account/cart/checkout'}
+            variant="contained"
+          >
+            Proceed To Checkout
+          </Button>
+        </div>
+      : null
+      }
+      
     </div>
   )
 }
