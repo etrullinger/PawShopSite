@@ -15,8 +15,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [ cart, setCart ] = useState(JSON.parse(localStorage.getItem("cart")));
-  const [cartCount, setCartCount] = useState(cart.length)
+  const [cart, setCart] = useState(JSON.parse(localStorage.getItem("cart")));
+  const [cartCount, setCartCount] = useState(cart && cart.length ? cart.length : 0)
 
   useEffect(() => {
     (localStorage.cart) ? setCartCount(JSON.parse(localStorage.cart).length) : setCartCount(0)
